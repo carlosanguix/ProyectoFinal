@@ -3,4 +3,8 @@
 *.odg
 *.odt#
 *.odt
+*.pdf#
 *.pdf
+
+#Modulos de Node
+node_modules
