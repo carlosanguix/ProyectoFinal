@@ -1,11 +1,13 @@
-#Cosas varias
-aADcoumentos
+#Modulos de Node
+node_modules
+
+#Carpetas
+aADocumentos
+
+#Documentos
 *.odg#
 *.odg
 *.odt#
 *.odt
 *.pdf#
 *.pdf
-
-#Modulos de Node
-node_modules
