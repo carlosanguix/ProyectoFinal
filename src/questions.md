@@ -1,8 +1,10 @@
 
-# Express.static??? dynamic????
+Express.static??? dynamic????
 
-# Sesiones
+Sesiones
 
-# Cifrar password registro/login
+Cifrar password registro/login
 
-# nodemon -D? -> package.json devDependecies????
+nodemon -D? -> package.json devDependecies????
+
+BBDD -> Respuestas a los comentarios, no son comentarios al fin y al cabo? Debería hacer una herencia? O simplemente añadir una tabla igual que la de comentarios
