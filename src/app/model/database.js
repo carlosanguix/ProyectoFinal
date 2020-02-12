@@ -1,3 +1,5 @@
+
+// TODO Fuera de aquí!
 // Requires
 const mysql = require('mysql'); 
 const { dbData } = require('../../keys');
@@ -36,5 +38,3 @@ class Database {
 
 // TODO Exports de clases en MVC? Rutas?
 module.exports = Database;
-
-

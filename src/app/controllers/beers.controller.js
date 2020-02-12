@@ -1,10 +1,9 @@
 // Requires
-const dbClass = require('../model/birras.model');
+const dbClass = require('../model/database');
 let database = new dbClass();
 
 exports.findAllBeers = (req, res) => {
 
-    // Function to find all beers
     database.connect();
     res.send('findAll');
 }
@@ -12,5 +11,13 @@ exports.findAllBeers = (req, res) => {
 exports.findOneBeer = (req, res) => {
 
     database.connect();
-    res.send('findOneBeer');
+    res.send(req.params.idBeer);
 }
+
+// Function to find one comment
+
+
+// Function to find all replies to one comment
+
+
+// Function to find
