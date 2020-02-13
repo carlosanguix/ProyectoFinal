@@ -11,3 +11,4 @@ aADocumentos
 *.odt
 *.pdf#
 *.pdf
+package-lock.json
