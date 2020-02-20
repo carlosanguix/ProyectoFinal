@@ -6,8 +6,3 @@ class Beer {
         this.origin = origin;
     }
 }
-
-
-
-
-
