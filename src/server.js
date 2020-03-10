@@ -11,7 +11,6 @@ const port = process.env.port || 3003;
 require('./app/routes/beers.routes')(app);
 
 // Servicio al cliente /public
-// TODO static??? Yo quiero dynamic
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Arrancando el servidor
