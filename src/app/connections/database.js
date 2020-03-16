@@ -1,4 +1,3 @@
-
 // TODO Fuera de aquí!
 // Requires
 const mysql = require('mysql'); 

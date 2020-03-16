@@ -1,6 +1,0 @@
-
-
-exports.signIn = (req, res) => {
-
-    
-}

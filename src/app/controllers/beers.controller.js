@@ -1,16 +1,16 @@
 // Requires
-const dbClass = require('../model/database');
+const dbClass = require('../connections/database');
 let database = new dbClass();
 
 exports.findAllBeers = (req, res) => {
 
-    database.connect();
+    // database.connect();
     res.send('findAll');
 }
 
 exports.findOneBeer = (req, res) => {
 
-    database.connect();
+    // database.connect();
     res.send(req.params.idBeer);
 }
 
