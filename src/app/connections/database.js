@@ -22,12 +22,21 @@ class Database {
             if(err)
             return console.log('!**' + err);
             else
-            /*console.log(` * Base de datos conectada
-            - BBDD:     ${db.dbData.database}
-            - usuario:  ${db.dbData.user}
-            - password: ${db.dbData.password}`);*/
+            console.log(` * Base de datos conectada
+            - BBDD:     ${dbData.database}
+            - usuario:  ${dbData.user}
+            - password: ${dbData.password}`);
             console.log(' * Base de datos conectada');
         });
+    }
+
+    close() {
+        this.conn.end(function(err) {
+            if (err) {
+              return console.log('error:' + err.message);
+            }
+            console.log('Close the database connection.');
+          });
     }
 
     findOneBeer(idBeer) {

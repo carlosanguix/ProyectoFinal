@@ -4,8 +4,9 @@ let database = new dbClass();
 
 exports.findAllBeers = (req, res) => {
 
-    // database.connect();
+    database.connect();
     res.send('findAll');
+    database.close();
 }
 
 exports.findOneBeer = (req, res) => {
