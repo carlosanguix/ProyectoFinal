@@ -10,5 +10,5 @@ module.exports = (app) => {
     app.post('/signIn', controller.signIn);
 
     // Buscar una cerveza por ID???? Nombre???
-    app.get('/signUp', controller.signUp);
+    app.post('/signUp', controller.signUp);
 }

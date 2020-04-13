@@ -6,7 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Login - Beer Baron</title>
-    <link rel="stylesheet" type="text/css" href="mystyle.css">
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <!--
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
+        <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/md5.js"></script>
+    -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/md5.js"></script>
     <script src="index.js"></script>
     <link rel="icon" href="img/logo.png" sizes="196x196">
 </head>
@@ -48,19 +54,19 @@
                 <div class="sign-up-htm">
                     <div class="group">
                         <label for="suUser" class="label">Username</label>
-                        <input id="suUser" type="text" class="input">
+                        <input id="suUser" type="text" class="input" value="aaaaaaaaaa">
                     </div>
                     <div class="group">
                         <label for="suPass" class="label">Password</label>
-                        <input id="suPass" type="password" class="input" data-type="password">
+                        <input id="suPass" type="password" class="input" data-type="password" value="A1aaaaaa">
                     </div>
                     <div class="group">
                         <label for="suPassRepeat" class="label">Repeat Password</label>
-                        <input id="suPassRepeat" type="password" class="input" data-type="password">
+                        <input id="suPassRepeat" type="password" class="input" data-type="password" value="A1aaaaaa">
                     </div>
                     <div class="group">
                         <label for="email" class="label">Email Address</label>
-                        <input id="email" type="text" class="input">
+                        <input id="email" type="text" class="input" value="a@gmail.com">
                     </div>
                     <div class="group">
                         <input id="suButton" type="submit" class="button" value="Sign Up">

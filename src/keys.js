@@ -6,6 +6,6 @@ module.exports = { // Modulos para exportar
         host: 'localhost', // TODO En caso de que la BBDD esté en local
         user: 'baron',
         password: 'birra',
-        database: 'baronbirra'
+        database: 'birras'
     }
 }

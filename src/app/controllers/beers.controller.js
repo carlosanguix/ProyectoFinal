@@ -1,12 +1,17 @@
 // Requires
 const dbClass = require('../connections/database');
 let database = new dbClass();
+let db = require('../connections/manager');
 
-exports.findAllBeers = (req, res) => {
+exports.findAllBeers = async (req, res) => {
 
-    database.connect();
+    //database.connect();
+    //res.send('findAll');
+    //database.close();
+
+    let connection = await db.connectDB();
     res.send('findAll');
-    database.close();
+    connection.end();
 }
 
 exports.findOneBeer = (req, res) => {
