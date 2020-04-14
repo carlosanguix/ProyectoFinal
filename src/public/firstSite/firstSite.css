@@ -1,0 +1,14 @@
+body {
+    margin: 0;
+}
+
+#header {
+    display: flex;
+    height: auto;
+    width: 100%;
+    background-color: burlywood;
+}
+
+#logo {
+    width: 100px;
+}
