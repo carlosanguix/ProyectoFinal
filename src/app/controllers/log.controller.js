@@ -8,13 +8,13 @@ exports.signIn = async (req, res) => {
     let password = crypt(req.body.password).toString();
 
     console.log(user + "" + password);
-    
+
     // Comprobar usuario y contraseña existen en la BBDD
     // Usuario incorrecto, la contraseña no tiene sentido comprobarla, devolvemos "el usuario no existe"
     // Usuario correcto
-        // Pero la contraseña es incorrecta, devolvemos "contraseña incorrecta"
-        // Contraseña correcta, redireccionamos al usuario ala web principal
-        
+    // Pero la contraseña es incorrecta, devolvemos "contraseña incorrecta"
+    // Contraseña correcta, redireccionamos al usuario ala web principal
+
     resp = {
         validation: true,
         name: user,
@@ -23,20 +23,36 @@ exports.signIn = async (req, res) => {
 
     let j = JSON.stringify(resp);
     console.log(j);
-    
+
     res.cookie('baron', resp.name);
     res.send(resp);
 }
 
-exports.signUp = (req, res) => {
+exports.signUp = async (req, res) => {
 
-    let userExist = functionsDB.userExist(req.body.username);
-    if (userExist) {
-        console.log('existe');
-    } else {
-        console.log('no existe');
+ 
+
+}
+
+exports.checkUser = async (req, res) => {
+
+    let coincidences = [false, false];
+
+    let name = req.params.name;
+    let email = req.params.email;
+    
+    let userExists = await functionsDB.userExists(name);
+    let emailExists = await functionsDB.emailExists(email);
+
+    if (userExists == name) {
+        console.log('El usuario ya existe');
+        coincidences[0] = true;
     }
-    
-    
-    res.send(true);
+
+    if (emailExists == email) {
+        console.log('El email ya existe');
+        coincidences[1] = true;
+    }
+
+    res.send(coincidences);
 }

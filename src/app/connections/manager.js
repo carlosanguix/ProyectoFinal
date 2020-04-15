@@ -14,32 +14,45 @@ const connectDB = async () => {
     return await mysql.createConnection(config);
 }
 
-const userExist = async (name) => {
+const userExists = async (name) => {
 
     let connection = await connectDB();
 
-    let [rows, fields] = await connection.execute('SELECT `name` FROM `users` WHERE `name` like ?', [name]);
-    
+    let [rows] = await connection.execute('SELECT `name` FROM `users` WHERE `name` like ?', [name]);
+
     if (rows.length != 0) {
         console.log(rows[0].name);
+        return rows[0].name;
+    } else {
+        return "";
     }
 };
 
+const emailExists = async (email) => {
 
+    let connection = await connectDB();
 
-const emailExist = (email) => {
-
-
-}
+    let [rows] = await connection.execute('SELECT `email` FROM `users` WHERE `email` like ?', [email]);
+    
+    console.log(rows[0].email);
+    
+    if (rows.length != 0) {
+        console.log(rows[0].email);
+        return rows[0].email;
+    } else {
+        return "";
+    }
+};
 
 const createUser = (suData) => {
 
-    userExist(suData.username);
+    userExists(suData.username);
 
 
 }
 
 module.exports = {
     connectDB,
-    userExist
+    userExists,
+    emailExists
 }

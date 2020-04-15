@@ -24,12 +24,12 @@ async function signInCorrectData() {
     });
 
     let response = await URLfetch.json();
-    
+
     localStorage.setItem('baronLogin', JSON.stringify(response));
     console.log(JSON.parse(localStorage.getItem('baronLogin')));
-    
+
     console.log(response.validation);
-    
+
 
     if (response.validation) {
         //setCookie(response);
@@ -44,7 +44,7 @@ async function signInCorrectData() {
 function setCookie(data) {
 
     let date = new Date();
-    date.setTime(date.getTime() + (1*24*60*60*1000));
+    date.setTime(date.getTime() + (1 * 24 * 60 * 60 * 1000));
     let expires = date.toUTCString();
     document.cookie = 'baronBeerLog' + '=' + (data.id) + ';expires=' + expires;
 }
@@ -148,7 +148,6 @@ function signUpCorrectData() {
     let checker = arr => arr.every(Boolean);
 
     if (checker(suErrors)) {
-        console.log('ok');
 
         let a = CryptoJS.MD5(suPass.value);
 
@@ -165,27 +164,41 @@ function signUpCorrectData() {
     }
 }
 
+
 async function createUser(userData) {
 
     console.log(userData);
+    let userAndEmail = await checkInUse(userData);
 
-    let url = `http://localhost:3003/signUp`;
-    let settings = {
-        method: 'POST',
-        body: JSON.stringify(userData),
-        headers: {
-            'Content-Type': 'application/json'
-        }
+    if (userAndEmail[0]) {
+        // El usuario ya existe
     }
 
-    let URLfetch = await fetch(url, settings).catch((err) => {
-        console.log(err);
-    });
+    if (userAndEmail[1]) {
+        // El email ya esta en uso
+    }
 
-    let response = await URLfetch.json();
+    if (!userAndEmail[0] && !userAndEmail[1]) {
 
-    console.log(response);
-    
+        // Damos de alta el usuario en la BBDD
+        let url = `http://localhost:3003/signUp`;
+        let settings = {
+            method: 'POST',
+            body: JSON.stringify(userData),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+        let URLfetch = await fetch(url, settings).catch((err) => {
+            console.log(err);
+        });
+
+        let response = await URLfetch.json();
+
+        console.log(response);
+    }
+
     /*
     if (response) {
         window.location.href = 'http://localhost:3003/firstSite/firstSite.html';
@@ -194,6 +207,42 @@ async function createUser(userData) {
         console.log('usuario incorrecto');
     }*/
 }
+
+async function checkInUse(params) {
+    
+    let url = (`http://localhost:3003/checkUSer/${params.username}/${params.email}`);
+
+    let URLfetch = await fetch(url).catch((err) => {
+        console.log(err);
+    });
+
+    let response = await URLfetch.json();
+
+    console.log(response);
+
+    return response;
+}
+
+/*
+async function checkUserInUse(username) {
+    console.log(username);
+    
+    let url = (`http://localhost:3003/checkUSer/${username}`);
+
+    let URLfetch = await fetch(url).catch((err) => {
+        console.log(err);
+    });
+
+    let response = await URLfetch.json();
+
+    console.log(response);
+
+    return response;
+}
+
+async function checkEmailInUse() {
+
+}*/
 
 //////////
 // MAIN //
@@ -231,9 +280,9 @@ var getCookie = function (name) {
     var parts = value.split("; " + name + "=");
     if (parts.length == 2) {
         console.log(parts.pop());
-        
+
         return parts.pop().split(";").shift();
-    } 
+    }
 };
 
 function init() {
@@ -247,7 +296,7 @@ function init() {
         //console.log(JSON.parse(a));
 
     }*/
-    
+
 
     siUser = document.getElementById('siUser');
     siPass = document.getElementById('siPass');
