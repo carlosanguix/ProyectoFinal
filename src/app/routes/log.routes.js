@@ -5,10 +5,11 @@ const controller = require('../controllers/log.controller');
 
 module.exports = (app) => {
 
-    // Buscar un usuario
-    // app.get('/signIn', controller.signIn);
+    // Buscar un usuario en la base de datos
+
+    // Iniciar sesion como usuario
     app.post('/signIn', controller.signIn);
 
-    // Buscar una cerveza por ID???? Nombre???
+    // Crear un usuario
     app.post('/signUp', controller.signUp);
 }

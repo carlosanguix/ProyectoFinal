@@ -1,7 +1,4 @@
 // Requires
-//const dbClass = require('../connections/database');
-//let database = new dbClass();
-//const md5 = require('crypto-md5');
 const crypt = require('crypto-md5');
 const functionsDB = require('../connections/manager');
 
@@ -18,19 +15,27 @@ exports.signIn = async (req, res) => {
         // Pero la contraseña es incorrecta, devolvemos "contraseña incorrecta"
         // Contraseña correcta, redireccionamos al usuario ala web principal
         
-    res.send(true);
+    resp = {
+        validation: true,
+        name: user,
+        id: 2
+    }
+
+    let j = JSON.stringify(resp);
+    console.log(j);
+    
+    res.cookie('baron', resp.name);
+    res.send(resp);
 }
 
 exports.signUp = (req, res) => {
 
-    console.log('sing up');
-    
-    let suData = req.body;
-    console.log(suData);
-
-    let crypted = crypt(suData.password);
-    console.log(crypted);
-    
+    let userExist = functionsDB.userExist(req.body.username);
+    if (userExist) {
+        console.log('existe');
+    } else {
+        console.log('no existe');
+    }
     
     
     res.send(true);

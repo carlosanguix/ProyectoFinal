@@ -24,16 +24,51 @@ async function signInCorrectData() {
     });
 
     let response = await URLfetch.json();
-    console.log(response);
+    
+    localStorage.setItem('baronLogin', JSON.stringify(response));
+    console.log(JSON.parse(localStorage.getItem('baronLogin')));
+    
+    console.log(response.validation);
     
 
-    if (response) {
+    if (response.validation) {
+        //setCookie(response);
+        //setTimeout(() => {window.location.href = 'http://localhost:3003/firstSite/firstSite.html';}, 5000);
         window.location.href = 'http://localhost:3003/firstSite/firstSite.html';
         console.log('usuario correcto');
     } else {
         console.log('usuario incorrecto');
     }
 }
+
+function setCookie(data) {
+
+    let date = new Date();
+    date.setTime(date.getTime() + (1*24*60*60*1000));
+    let expires = date.toUTCString();
+    document.cookie = 'baronBeerLog' + '=' + (data.id) + ';expires=' + expires;
+}
+
+/*
+function getCookie() {
+
+    let cookie = document.cookie.split(';')
+    if (cookie != "") {
+        console.log('cookie exist');
+        let p;
+        let a;
+        for (let i = 0; i < cookie.length; i++) {
+            a = cookie[i];
+            p += cookie[i];
+            console.log(a);        
+        }
+        alert(p);
+        
+    } else {
+        console.log('cookie not exist');
+    }
+}*/
+
 
 /////////////
 // SIGN UP //
@@ -46,7 +81,7 @@ function validateUsername() {
         suErrors[0] = false;
         // Solo mayus, minus y numb
     } else {
-        if (suUser.value.length < 5) {
+        if (suUser.value.length < 4) {
             suUser.style.boxShadow = 'inset 0px 0px 0px 2px #f00';
             console.log('< 5');
             suErrors[0] = false;
@@ -117,16 +152,13 @@ function signUpCorrectData() {
 
         let a = CryptoJS.MD5(suPass.value);
 
-        let userData = {
+        let suData = {
             username: suUser.value,
             password: suPass.value,
-            email: suEmail.value,
-            p: a
+            email: suEmail.value
         };
 
-        console.log(userData);
-
-        createUser(userData);
+        createUser(suData);
 
     } else {
         console.log('mal');
@@ -136,7 +168,6 @@ function signUpCorrectData() {
 async function createUser(userData) {
 
     console.log(userData);
-
 
     let url = `http://localhost:3003/signUp`;
     let settings = {
@@ -153,17 +184,21 @@ async function createUser(userData) {
 
     let response = await URLfetch.json();
 
+    console.log(response);
+    
+    /*
     if (response) {
         window.location.href = 'http://localhost:3003/firstSite/firstSite.html';
         console.log('usuario correcto');
     } else {
         console.log('usuario incorrecto');
-    }
+    }*/
 }
 
 //////////
 // MAIN //
 //////////
+
 
 function giveEvents() {
 
@@ -191,7 +226,28 @@ function giveEvents() {
     suButton.onclick = () => { signUpCorrectData() };
 }
 
+var getCookie = function (name) {
+    var value = "; " + document.cookie;
+    var parts = value.split("; " + name + "=");
+    if (parts.length == 2) {
+        console.log(parts.pop());
+        
+        return parts.pop().split(";").shift();
+    } 
+};
+
 function init() {
+
+    /*
+    //getCookie();
+    let a = getCookie('baron');
+    if(a){
+        //console.log(Buffer.from(a, 'base64').toString());
+        console.log(JSON.parse(a));
+        //console.log(JSON.parse(a));
+
+    }*/
+    
 
     siUser = document.getElementById('siUser');
     siPass = document.getElementById('siPass');
@@ -205,6 +261,8 @@ function init() {
 
     giveEvents();
 }
+
+
 
 /*
 si -> sign in
@@ -220,6 +278,9 @@ let suPassRep;
 let suEmail;
 let suButton;
 
-let suErrors = [false, false, false, false];
+// TODO Esta a true para probar, CAMBIAR
+let suErrors = [true, true, true, true];
+
+let cookie;
 
 window.onload = init;

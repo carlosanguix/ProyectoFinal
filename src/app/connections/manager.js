@@ -1,5 +1,4 @@
-
-const mysql = require("mysql");
+const mysql = require("mysql2/promise");
 const { dbData } = require('../../keys');
 const md5 = require('crypto-md5');
 
@@ -15,26 +14,32 @@ const connectDB = async () => {
     return await mysql.createConnection(config);
 }
 
-const userExist = async(user, password) => {
+const userExist = async (name) => {
 
-    let connection = connectDB();
-}
+    let connection = await connectDB();
 
-const createUser = async(suData) => {
-
-    let username = suData.user;
-    let passwordCrypted = md5(suData.password);
-    let mail = suData.email;
-
-    let connection = connectDB();
-
+    let [rows, fields] = await connection.execute('SELECT `name` FROM `users` WHERE `name` like ?', [name]);
     
-    let sql = `INSERT INTO users (${user}, ${password})`;
+    if (rows.length != 0) {
+        console.log(rows[0].name);
+    }
+};
+
+
+
+const emailExist = (email) => {
+
+
 }
 
+const createUser = (suData) => {
+
+    userExist(suData.username);
 
 
+}
 
 module.exports = {
-    connectDB
+    connectDB,
+    userExist
 }

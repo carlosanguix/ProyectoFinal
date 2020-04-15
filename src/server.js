@@ -2,12 +2,14 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const md5 = require('crypto-md5');
 
 // Configuraciones
 const app = express();
 const port = process.env.port || 3003;
 app.use(bodyParser());
+app.use(cookieParser());
 
 // Rutas
 require('./app/routes/beers.routes')(app);

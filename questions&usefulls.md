@@ -1,3 +1,15 @@
+//////////////
+// USEFULLS //
+//////////////
+
+BBDD:
+https://openbeerdb.com/
+
+
+///////////////
+// QUESTIONS //
+///////////////
+
 Express.static??? dynamic????
     -> (Gestor de plantillas) Dynamic para plantillas (No se aun si lo quiero)
 
