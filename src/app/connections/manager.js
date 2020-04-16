@@ -14,11 +14,39 @@ const connectDB = async () => {
     return await mysql.createConnection(config);
 }
 
-const userExists = async (name) => {
+const getPassword = async (password) => {
+
+    let connecttion = await connectDB();
+
+    let [rows] = await connecttion.execute('SELECT `password` FROM `users` WHERE `password` LIKE ?', [password]);
+
+    if (rows.length != 0) {
+        console.log(rows[0]);
+        return rows[0];
+    } else {
+        return "";
+    }
+}
+
+const getUserID = async (name) => {
 
     let connection = await connectDB();
 
-    let [rows] = await connection.execute('SELECT `name` FROM `users` WHERE `name` like ?', [name]);
+    let [rows] = await connection.execute('SELECT `idUser` FROM `users` WHERE `name` LIKE ?', [name]);
+
+    if (rows.length != 0) {
+        console.log(rows[0]);
+        return rows[0];
+    } else {
+        return "";
+    }
+}
+
+const getUserByName = async (name) => {
+
+    let connection = await connectDB();
+
+    let [rows] = await connection.execute('SELECT `name` FROM `users` WHERE `name` LIKE ?', [name]);
 
     if (rows.length != 0) {
         console.log(rows[0].name);
@@ -28,7 +56,7 @@ const userExists = async (name) => {
     }
 };
 
-const emailExists = async (email) => {
+const getEmail = async (email) => {
 
     let connection = await connectDB();
 
@@ -47,14 +75,13 @@ const createUser = async (suData) => {
     let connection = await connectDB();
     
     let [rows] = await connection.execute('INSERT INTO `users` (`name`, `email`, `password`) VALUES (?, ?, ?)', [suData.username, suData.email, suData.password]);
-
-    // console.log(rows);
-    
 }
 
 module.exports = {
     connectDB,
-    userExists,
-    emailExists,
-    createUser
+    getUserByName,
+    getEmail,
+    createUser,
+    getPassword,
+    getUserID
 }

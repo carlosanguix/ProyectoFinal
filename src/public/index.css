@@ -1,4 +1,5 @@
 body {
+  height: 100vh;
   margin: 0;
   color: #011557;
   background: #c8c8c8;
@@ -203,4 +204,33 @@ input[type="password"] {
 .error {
   float: right;
   color: red;
+}
+
+.divContainer {
+
+  z-index: 998;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.divMessage {
+
+  z-index: 999;
+  position: absolute;
+  top: 20%;
+  left: 5%;
+  font: "Open Sans", sans-serif;
+  font-size: xx-large;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  display: flex;
+  align-self: center;
+  justify-self: center;
+  width: 90%;
+  height: 300px;
+  background-color: black;
 }

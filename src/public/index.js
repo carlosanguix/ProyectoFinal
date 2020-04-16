@@ -25,47 +25,41 @@ async function signInCorrectData() {
 
     let response = await URLfetch.json();
 
-    localStorage.setItem('baronLogin', JSON.stringify(response));
-    console.log(JSON.parse(localStorage.getItem('baronLogin')));
+    console.log(response);
 
-    console.log(response.validation);
+    let lblSiUser = document.querySelector('label[for="siUser"]');
+    let lblSiPass = document.querySelector('label[for="siPass"]');
+    lblSiUser.innerHTML = `Username`;
+    lblSiPass.innerHTML = `Password`;
 
-
-    if (response.validation) {
-        //setCookie(response);
-        //setTimeout(() => {window.location.href = 'http://localhost:3003/firstSite/firstSite.html';}, 5000);
-        window.location.href = 'http://localhost:3003/firstSite/firstSite.html';
-        console.log('usuario correcto');
+    if (response.correctData[0]) {
+        // Usuario existe
+        console.log('usuario existe');
+        if (response.correctData[1]) {
+            // Contraseña correcta
+            console.log('password correcta');
+            // Creamos la cookie en localStorage
+            localStorage.setItem('baron', JSON.stringify(response.cookie));
+            console.log('localStorage ' + JSON.parse(localStorage.getItem('baron')));
+            // Redireccionamos al usuario a la pagina principal
+            window.location.href = 'http://localhost:3003/firstSite/firstSite.html';
+        } else {
+            // Contraseña incorrecta
+            console.log('password incorrecta');
+            lblSiPass.innerHTML += `<span id="lblErrorPass" class="error"> (The password is incorrect)</span>`;
+        }
     } else {
-        console.log('usuario incorrecto');
+        // Usuario no esta registrado
+        console.log('usuario no registrado');
+        lblSiUser.innerHTML += `<span id="lblErrorUser" class="error"> (The user doesn't exist)</span>`;
     }
 }
-
-/*
-function getCookie() {
-
-    let cookie = document.cookie.split(';')
-    if (cookie != "") {
-        console.log('cookie exist');
-        let p;
-        let a;
-        for (let i = 0; i < cookie.length; i++) {
-            a = cookie[i];
-            p += cookie[i];
-            console.log(a);        
-        }
-        alert(p);
-        
-    } else {
-        console.log('cookie not exist');
-    }
-}*/
-
 
 /////////////
 // SIGN UP //
 /////////////
 
+// Validation user Function
 function validateUsername() {
 
     if (!/^[a-zA-Z0-9]*$/.test(suUser.value)) {
@@ -89,9 +83,10 @@ function validateUsername() {
     }
 }
 
+// Validation password function
 function validatePassword() {
 
-    if (/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/.test(suPass.value)) {
+    if (/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{6,}$/.test(suPass.value)) {
         suPass.style.boxShadow = 'none';
         suErrors[1] = true;
     } else {
@@ -104,6 +99,7 @@ function validatePassword() {
     }
 }
 
+// Validation identical passwords function
 function areSamePasswords() {
 
     let passRep = suPassRep.value;
@@ -121,6 +117,7 @@ function areSamePasswords() {
     }
 }
 
+// Validation email function
 function validateEmail(mail) {
 
     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
@@ -136,6 +133,7 @@ function validateEmail(mail) {
     }
 }
 
+// Validation function of all fields
 function signUpCorrectData() {
 
     console.log(suErrors);
@@ -160,16 +158,41 @@ function signUpCorrectData() {
     }
 }
 
+// Non-repeated user validation funcion
+async function checkInUse(userData) {
+
+    console.log(userData);
+
+    let url = `http://localhost:3003/signUp`;
+    let settings = {
+        method: 'POST',
+        body: JSON.stringify(userData),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+
+    let URLfetch = await fetch(url, settings).catch((err) => {
+        console.log(err);
+    });
+
+    let response = await URLfetch.json();
+
+    console.log(response);
+    return response;
+}
+
+// User creation function
 async function createUser(userData) {
 
     let coincidences = await checkInUse(userData);
     console.log(coincidences);
-    
+
 
     if (coincidences[0]) {
         // El usuario ya existe
-        let lblUser = document.querySelector('label[for="suUser"]');
-        lblUser.innerHTML += '<span id="lblErrorUser" class="error"> (The user is already in use)</span>';
+        let lblSuUser = document.querySelector('label[for="suUser"]');
+        lblSuUser.innerHTML += '<span id="lblErrorUser" class="error"> (The user is already in use)</span>';
     }
 
     if (coincidences[1]) {
@@ -183,34 +206,38 @@ async function createUser(userData) {
         console.log("creamos el usuario");
         // Hemos dado de alta el usuario en la BBDD
         // Informamos al usuario
-
-        // Lo redirigimos a la pagina principal
-        window.location.href = 'http://localhost:3003/firstSite/firstSite.html';
+        windowPopupMessage();
     }
-    
 }
 
-async function checkInUse(userData) {
+function windowPopupMessage() {
 
-    console.log(userData);
+    let divMessage = document.createElement('div');
+    let divContainer = document.createElement('div');
+
+    divContainer.classList = 'divContainer';
+    document.querySelector('body').appendChild(divContainer);
+
+    divMessage.classList = 'divMessage';
+    divMessage.id = 'divMessage';
+    divMessage.innerHTML = `<p>Thank you for registering on our website, we are redirecting you to the main page.</p>`;
+    divContainer.appendChild(divMessage);
+
+    setTimeout(() => {
+        window.location.href = "firstSite/firstSite.html";
+    }, 3000);
+
+}
+
+//////////////////////
+// GLOBAL FUNCTIONS //
+//////////////////////
+
+function getTheCookie() {
+
+    let theCookie = JSON.parse(localStorage.getItem('baron'));
+    return theCookie;
     
-    let url = `http://localhost:3003/signUp`;
-        let settings = {
-            method: 'POST',
-            body: JSON.stringify(userData),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }
-
-        let URLfetch = await fetch(url, settings).catch((err) => {
-            console.log(err);
-        });
-
-        let response = await URLfetch.json();
-
-        console.log(response);
-        return response;
 }
 
 //////////
@@ -243,35 +270,14 @@ function giveEvents() {
     suButton.onclick = () => { signUpCorrectData() };
 }
 
-function setCookie(data) {
 
-    let date = new Date();
-    date.setTime(date.getTime() + (1 * 24 * 60 * 60 * 1000));
-    let expires = date.toUTCString();
-    document.cookie = 'baronBeerLog' + '=' + (data.id) + ';expires=' + expires;
-}
-
-var getCookie = function (name) {
-    var value = "; " + document.cookie;
-    var parts = value.split("; " + name + "=");
-    if (parts.length == 2) {
-        console.log(parts.pop());
-
-        return parts.pop().split(";").shift();
-    }
-};
 
 function init() {
 
-    /*
-    //getCookie();
-    let a = getCookie('baron');
-    if(a){
-        //console.log(Buffer.from(a, 'base64').toString());
-        console.log(JSON.parse(a));
-        //console.log(JSON.parse(a));
-
-    }*/
+    cookie = getTheCookie();
+    if (cookie != null) {
+        window.location.href = 'http://localhost:3003/firstSite/firstSite.html';
+    }
 
     siUser = document.getElementById('siUser');
     siPass = document.getElementById('siPass');
@@ -287,6 +293,9 @@ function init() {
 }
 
 
+//////////////////////
+// GLOBAL VARIABLES //
+//////////////////////
 
 /*
 si -> sign in
