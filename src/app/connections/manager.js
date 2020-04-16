@@ -34,8 +34,6 @@ const emailExists = async (email) => {
 
     let [rows] = await connection.execute('SELECT `email` FROM `users` WHERE `email` like ?', [email]);
     
-    console.log(rows[0].email);
-    
     if (rows.length != 0) {
         console.log(rows[0].email);
         return rows[0].email;
@@ -44,15 +42,19 @@ const emailExists = async (email) => {
     }
 };
 
-const createUser = (suData) => {
+const createUser = async (suData) => {
 
-    userExists(suData.username);
+    let connection = await connectDB();
+    
+    let [rows] = await connection.execute('INSERT INTO `users` (`name`, `email`, `password`) VALUES (?, ?, ?)', [suData.username, suData.email, suData.password]);
 
-
+    // console.log(rows);
+    
 }
 
 module.exports = {
     connectDB,
     userExists,
-    emailExists
+    emailExists,
+    createUser
 }

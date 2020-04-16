@@ -28,18 +28,23 @@ exports.signIn = async (req, res) => {
     res.send(resp);
 }
 
+/*
 exports.signUp = async (req, res) => {
 
- 
+    console.log(req.body);
 
-}
+    let created = await functionsDB.createUser(req.body);
 
-exports.checkUser = async (req, res) => {
+
+    res.send(true);
+}*/
+
+exports.signUp = async (req, res) => {
 
     let coincidences = [false, false];
 
-    let name = req.params.name;
-    let email = req.params.email;
+    let name = req.body.username;
+    let email = req.body.email;
     
     let userExists = await functionsDB.userExists(name);
     let emailExists = await functionsDB.emailExists(email);
@@ -54,5 +59,11 @@ exports.checkUser = async (req, res) => {
         coincidences[1] = true;
     }
 
+    if (!coincidences[0] && !coincidences[1]) {
+        functionsDB.createUser(req.body);
+    }
+
+    console.log(coincidences);
+    
     res.send(coincidences);
 }

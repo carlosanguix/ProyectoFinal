@@ -6,11 +6,11 @@ const controller = require('../controllers/log.controller');
 module.exports = (app) => {
 
     // Buscar un usuario en la base de datos
-    app.get('/checkUser/:name/:email', controller.checkUser);
+    app.post('/signUp', controller.signUp);
 
     // Iniciar sesion como usuario
     app.post('/signIn', controller.signIn);
 
     // Crear un usuario
-    app.post('/signUp', controller.signUp);
+    //app.post('/signUp', controller.signUp);
 }

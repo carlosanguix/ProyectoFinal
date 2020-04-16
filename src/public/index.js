@@ -41,14 +41,6 @@ async function signInCorrectData() {
     }
 }
 
-function setCookie(data) {
-
-    let date = new Date();
-    date.setTime(date.getTime() + (1 * 24 * 60 * 60 * 1000));
-    let expires = date.toUTCString();
-    document.cookie = 'baronBeerLog' + '=' + (data.id) + ';expires=' + expires;
-}
-
 /*
 function getCookie() {
 
@@ -116,11 +108,15 @@ function areSamePasswords() {
 
     let passRep = suPassRep.value;
 
+    let lblPassRep = document.querySelector('label[for="suPassRepeat"]');
+    lblPassRep.innerHTML = 'Repeat password';
+
     if (passRep == suPass.value) {
         suPassRep.style.boxShadow = 'none';
         suErrors[2] = true;
     } else {
         suPassRep.style.boxShadow = 'inset 0px 0px 0px 2px #f00';
+        lblPassRep.innerHTML += '<span id="lblErrorPassRep" class="error"> (The passwords must match)</span>';
         suErrors[2] = false;
     }
 }
@@ -164,24 +160,41 @@ function signUpCorrectData() {
     }
 }
 
-
 async function createUser(userData) {
 
-    console.log(userData);
-    let userAndEmail = await checkInUse(userData);
+    let coincidences = await checkInUse(userData);
+    console.log(coincidences);
+    
 
-    if (userAndEmail[0]) {
+    if (coincidences[0]) {
         // El usuario ya existe
+        let lblUser = document.querySelector('label[for="suUser"]');
+        lblUser.innerHTML += '<span id="lblErrorUser" class="error"> (The user is already in use)</span>';
     }
 
-    if (userAndEmail[1]) {
+    if (coincidences[1]) {
         // El email ya esta en uso
+        let lblEmail = document.querySelector('label[for="suEmail"]');
+        lblEmail.innerHTML += '<span id="lblErrorMail" class="error"> (The email is already in use)</span>';
     }
 
-    if (!userAndEmail[0] && !userAndEmail[1]) {
+    if (!coincidences[0] && !coincidences[1]) {
 
-        // Damos de alta el usuario en la BBDD
-        let url = `http://localhost:3003/signUp`;
+        console.log("creamos el usuario");
+        // Hemos dado de alta el usuario en la BBDD
+        // Informamos al usuario
+
+        // Lo redirigimos a la pagina principal
+        window.location.href = 'http://localhost:3003/firstSite/firstSite.html';
+    }
+    
+}
+
+async function checkInUse(userData) {
+
+    console.log(userData);
+    
+    let url = `http://localhost:3003/signUp`;
         let settings = {
             method: 'POST',
             body: JSON.stringify(userData),
@@ -197,57 +210,12 @@ async function createUser(userData) {
         let response = await URLfetch.json();
 
         console.log(response);
-    }
-
-    /*
-    if (response) {
-        window.location.href = 'http://localhost:3003/firstSite/firstSite.html';
-        console.log('usuario correcto');
-    } else {
-        console.log('usuario incorrecto');
-    }*/
+        return response;
 }
-
-async function checkInUse(params) {
-    
-    let url = (`http://localhost:3003/checkUSer/${params.username}/${params.email}`);
-
-    let URLfetch = await fetch(url).catch((err) => {
-        console.log(err);
-    });
-
-    let response = await URLfetch.json();
-
-    console.log(response);
-
-    return response;
-}
-
-/*
-async function checkUserInUse(username) {
-    console.log(username);
-    
-    let url = (`http://localhost:3003/checkUSer/${username}`);
-
-    let URLfetch = await fetch(url).catch((err) => {
-        console.log(err);
-    });
-
-    let response = await URLfetch.json();
-
-    console.log(response);
-
-    return response;
-}
-
-async function checkEmailInUse() {
-
-}*/
 
 //////////
 // MAIN //
 //////////
-
 
 function giveEvents() {
 
@@ -275,6 +243,14 @@ function giveEvents() {
     suButton.onclick = () => { signUpCorrectData() };
 }
 
+function setCookie(data) {
+
+    let date = new Date();
+    date.setTime(date.getTime() + (1 * 24 * 60 * 60 * 1000));
+    let expires = date.toUTCString();
+    document.cookie = 'baronBeerLog' + '=' + (data.id) + ';expires=' + expires;
+}
+
 var getCookie = function (name) {
     var value = "; " + document.cookie;
     var parts = value.split("; " + name + "=");
@@ -297,7 +273,6 @@ function init() {
 
     }*/
 
-
     siUser = document.getElementById('siUser');
     siPass = document.getElementById('siPass');
     siButton = document.getElementById('siButton');
@@ -317,7 +292,6 @@ function init() {
 si -> sign in
 su -> sign up
 */
-
 let siUser;
 let siPass;
 let siButton;
