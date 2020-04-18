@@ -1,10 +1,8 @@
 // Requires
-const crypt = require('crypto-md5');
-const functionsDB = require('../connections/manager');
+const functionsDB = require('../../infrastructure/mysql');
 
 exports.signIn = async (req, res) => {
 
-    //console.log(req.body.username + ", " + req.body.password);
     // ID, usuario y contraseña incorrectos al inicio
     let coincidences = [false, false];
     let id = -1;
@@ -34,27 +32,12 @@ exports.signIn = async (req, res) => {
     }
 
     res.send(respuesta);
-
-
-
-
-/*
-    resp = {
-        validation: true,
-        name: user,
-        id: 2
-    }
-
-    let j = JSON.stringify(resp);
-    console.log(j);
-
-    res.cookie('baron', resp.name);
-    res.send(resp);*/
 }
 
 exports.signUp = async (req, res) => {
 
     let coincidences = [false, false];
+    let id = -1;
 
     let name = req.body.username;
     let email = req.body.email;
@@ -74,9 +57,13 @@ exports.signUp = async (req, res) => {
 
     if (!coincidences[0] && !coincidences[1]) {
         functionsDB.createUser(req.body);
+        id = await functionsDB.getUserID(req.body.username);
     }
 
-    console.log(coincidences);
+    let respuesta = {
+        correctData: coincidences,
+        cookie: id.idUser
+    }
     
-    res.send(coincidences);
+    res.send(respuesta);
 }

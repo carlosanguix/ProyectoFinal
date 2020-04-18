@@ -1,4 +1,3 @@
-
 /////////////
 // SIGN IN //
 /////////////
@@ -42,7 +41,7 @@ async function signInCorrectData() {
             localStorage.setItem('baron', JSON.stringify(response.cookie));
             console.log('localStorage ' + JSON.parse(localStorage.getItem('baron')));
             // Redireccionamos al usuario a la pagina principal
-            window.location.href = 'http://localhost:3003/firstSite/firstSite.html';
+            windowPopupMessage();
         } else {
             // Contraseña incorrecta
             console.log('password incorrecta');
@@ -143,8 +142,6 @@ function signUpCorrectData() {
 
     if (checker(suErrors)) {
 
-        let a = CryptoJS.MD5(suPass.value);
-
         let suData = {
             username: suUser.value,
             password: suPass.value,
@@ -178,34 +175,34 @@ async function checkInUse(userData) {
 
     let response = await URLfetch.json();
 
-    console.log(response);
     return response;
 }
 
 // User creation function
 async function createUser(userData) {
 
-    let coincidences = await checkInUse(userData);
-    console.log(coincidences);
+    let response = await checkInUse(userData);
+    console.log(response);
 
 
-    if (coincidences[0]) {
+    if (response.correctData[0]) {
         // El usuario ya existe
         let lblSuUser = document.querySelector('label[for="suUser"]');
         lblSuUser.innerHTML += '<span id="lblErrorUser" class="error"> (The user is already in use)</span>';
     }
 
-    if (coincidences[1]) {
+    if (response.correctData[1]) {
         // El email ya esta en uso
         let lblEmail = document.querySelector('label[for="suEmail"]');
         lblEmail.innerHTML += '<span id="lblErrorMail" class="error"> (The email is already in use)</span>';
     }
 
-    if (!coincidences[0] && !coincidences[1]) {
-
+    if (!response.correctData[0] && !response.correctData[0]) {
         console.log("creamos el usuario");
         // Hemos dado de alta el usuario en la BBDD
         // Informamos al usuario
+        localStorage.setItem('baron', JSON.stringify(response.cookie));
+        console.log('localStorage ' + JSON.parse(localStorage.getItem('baron')));
         windowPopupMessage();
     }
 }
@@ -223,8 +220,12 @@ function windowPopupMessage() {
     divMessage.innerHTML = `<p>Thank you for registering on our website, we are redirecting you to the main page.</p>`;
     divContainer.appendChild(divMessage);
 
-    setTimeout(() => {
-        window.location.href = "firstSite/firstSite.html";
+    setTimeout(async () => {
+        // TODO Realizar una petición para que el servidor me renderice el home.
+        window.location.href = "http://localhost:3003/home";
+        
+        
+
     }, 3000);
 
 }
@@ -276,7 +277,7 @@ function init() {
 
     cookie = getTheCookie();
     if (cookie != null) {
-        window.location.href = 'http://localhost:3003/firstSite/firstSite.html';
+        window.location.href = 'http://localhost:3003/home';
     }
 
     siUser = document.getElementById('siUser');

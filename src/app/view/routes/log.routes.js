@@ -1,6 +1,3 @@
-
-
-
 const controller = require('../controllers/log.controller');
 
 module.exports = (app) => {

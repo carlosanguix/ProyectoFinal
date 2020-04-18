@@ -1,6 +1,5 @@
 const mysql = require("mysql2/promise");
-const { dbData } = require('../../keys');
-const md5 = require('crypto-md5');
+const { dbData } = require('./keys');
 
 const connectDB = async () => {
 
