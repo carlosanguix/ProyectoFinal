@@ -1,69 +1,85 @@
-// Requires
-const functionsDB = require('../../infrastructure/mysql');
+//////////////
+// REQUIRES //
+//////////////
+// Functions
+const userService = require('../../domain/services/userService');
+// Models
+const {userRequestViewModel} = require('../models/userRequestViewModel');
 
-exports.signIn = async (req, res) => {
 
-    // ID, usuario y contraseña incorrectos al inicio
-    let coincidences = [false, false];
-    let id = -1;
+///////////////
+// FUNCTIONS //
+///////////////
+async function checkUserInDatabase(userRequest) {
 
-    // Comprobar usuario y contraseña coinciden con algun usuario introducido en la BBDD
-    let nameUser = await functionsDB.getUserByName(req.body.username);
-    let passUser = await functionsDB.getPassword(req.body.password);
-    console.log('userpass' +passUser.password);
-    console.log('username' +nameUser);
+    console.log(userRequest);
+    // 0-username / 1-password / 2-email
+    let coincidences = [false, false, false];
 
-    // Usuario correcto
-    if (req.body.username == nameUser) {
+    let storedName = await userService.giveMeUsername(userRequest);
+    if (storedName == userRequest.username) {
+        console.log('El usuario existe');
         coincidences[0] = true;
     }
-    // Contraseña correcta
-    if (req.body.password == passUser.password) {
+    
+    let storedPassword = await userService.giveMePassword(userRequest);
+    if (storedPassword == userRequest.password) {
+        console.log('El password es correcto');
         coincidences[1] = true;
     }
-    // Todo correcto, conseguimos el ID
-    if (coincidences[0] && coincidences[1]) {
-        id = await functionsDB.getUserID(req.body.username);
-    }
-    
-    let respuesta = {
-        correctData: coincidences,
-        cookie: id.idUser
+
+    if (userRequest.email != undefined) {
+        let storedEmail = await userService.giveMeEmail(userRequest);
+        if (storedEmail == userRequest.email) {
+            console.log('El email existe');
+            coincidences[2] = true;
+        }
     }
 
-    res.send(respuesta);
+    return coincidences;
 }
 
-exports.signUp = async (req, res) => {
+const signIn = async (req, res) => {
 
-    let coincidences = [false, false];
-    let id = -1;
-
-    let name = req.body.username;
-    let email = req.body.email;
+    const userRequest = userRequestViewModel(req.body.username, req.body.password, req.body.email);
     
-    let userExists = await functionsDB.getUserByName(name);
-    let emailExists = await functionsDB.getEmail(email);
+    let coincidences = await checkUserInDatabase(userRequest);
 
-    if (userExists == name) {
-        console.log('El usuario ya existe');
-        coincidences[0] = true;
+    let idUser = -1;
+    
+    if (coincidences[0] && coincidences[1]) {
+        idUser = await userService.giveMeId(userRequest);
     }
 
-    if (emailExists == email) {
-        console.log('El email ya existe');
-        coincidences[1] = true;
-    }
-
-    if (!coincidences[0] && !coincidences[1]) {
-        functionsDB.createUser(req.body);
-        id = await functionsDB.getUserID(req.body.username);
-    }
-
-    let respuesta = {
+    let response = {
         correctData: coincidences,
-        cookie: id.idUser
+        token: idUser
+    }
+
+    res.send(response);
+}
+
+const signUp = async (req, res) => {
+
+    const userRequest = userRequestViewModel(req.body.username, req.body.password, req.body.email);
+
+    let coincidences = await checkUserInDatabase(userRequest);
+
+    let idUser = -1;
+
+    if (!coincidences[0] && !coincidences[2]) {
+        idUser = await userService.createUser(userRequest);
+    }
+
+    let response = {
+        correctData: coincidences,
+        token: idUser
     }
     
-    res.send(respuesta);
+    res.send(response);
+}
+
+module.exports = {
+    signIn,
+    signUp
 }

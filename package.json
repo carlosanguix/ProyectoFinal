@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "dev": "nodemon src/server.js",
-    "scssHome": "node-sass --watch src/app/view/client/scss/home.scss -o src/app/view/client/styles"
+    "scssHome": "node-sass --watch src/app/view/client/scss/home.scss -o src/public/styles",
+    "scssBeer": "node-sass --watch src/app/view/client/scss/beer.scss -o src/public/styles"
   },
   "author": "Carlos Anguix Genovés",
   "license": "MIT",

@@ -28,3 +28,8 @@ beers.model.js (MAL)
     -> En el modelo solo tiene que estar la estructura de los datos de la BBDD, la conexión debería hacerse en server.js y las funciones de consulta en el controlador.
 
 Cuando el usuario introduce correctamente el usuario y la contraseña en el login, el servidor debería redireccionarle directamente a la url deseada, no el cliente hacer un redirect desde el propio js a otra pagina.
+
+///////////
+// ANGEL //
+///////////
+Diferencias module.exports / const xxxxx; mo

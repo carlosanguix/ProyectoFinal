@@ -69,11 +69,16 @@ const getEmail = async (email) => {
     }
 };
 
-const createUser = async (suData) => {
+const createUser = async (user) => {
 
-    let connection = await connectDB();
+    let {newUserData} = require('../infrastructure/tables/userData');
+    const newUser = newUserData(user.username, user.password, user.email)
     
-    let [rows] = await connection.execute('INSERT INTO `users` (`name`, `email`, `password`) VALUES (?, ?, ?)', [suData.username, suData.email, suData.password]);
+    let connection = await connectDB();
+    let query = 'INSERT INTO `users` (`name`, `email`, `password`) VALUES (?, ?, ?)'
+    let [rows] = await connection.execute(query, [newUser.name, newUser.email, newUser.password]);
+    console.log(rows);
+    
 }
 
 module.exports = {

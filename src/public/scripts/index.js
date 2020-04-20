@@ -4,7 +4,7 @@
 
 async function signInCorrectData() {
 
-    let data = {
+    let siData = {
         username: siUser.value,
         password: siPass.value
     };
@@ -12,7 +12,7 @@ async function signInCorrectData() {
     let url = `http://localhost:3003/signIn`;
     let settings = {
         method: 'POST',
-        body: JSON.stringify(data),
+        body: JSON.stringify(siData),
         headers: {
             'Content-Type': 'application/json'
         }
@@ -38,7 +38,7 @@ async function signInCorrectData() {
             // Contraseña correcta
             console.log('password correcta');
             // Creamos la cookie en localStorage
-            localStorage.setItem('baron', JSON.stringify(response.cookie));
+            localStorage.setItem('baron', JSON.stringify(response.token));
             console.log('localStorage ' + JSON.parse(localStorage.getItem('baron')));
             // Redireccionamos al usuario a la pagina principal
             windowPopupMessage();
@@ -53,6 +53,7 @@ async function signInCorrectData() {
         lblSiUser.innerHTML += `<span id="lblErrorUser" class="error"> (The user doesn't exist)</span>`;
     }
 }
+
 
 /////////////
 // SIGN UP //
@@ -172,8 +173,11 @@ async function checkInUse(userData) {
     let URLfetch = await fetch(url, settings).catch((err) => {
         console.log(err);
     });
-
+    
+    console.log(URLfetch.headers);
+    
     let response = await URLfetch.json();
+    
 
     return response;
 }
@@ -184,24 +188,26 @@ async function createUser(userData) {
     let response = await checkInUse(userData);
     console.log(response);
 
+    let lblSuUser = document.querySelector('label[for="suUser"]');
+    let lblEmail = document.querySelector('label[for="suEmail"]');
+    lblSuUser.innerHTML = "Username";
+    lblEmail.innerHTML = "Email address";
 
     if (response.correctData[0]) {
         // El usuario ya existe
-        let lblSuUser = document.querySelector('label[for="suUser"]');
         lblSuUser.innerHTML += '<span id="lblErrorUser" class="error"> (The user is already in use)</span>';
     }
 
-    if (response.correctData[1]) {
+    if (response.correctData[2]) {
         // El email ya esta en uso
-        let lblEmail = document.querySelector('label[for="suEmail"]');
         lblEmail.innerHTML += '<span id="lblErrorMail" class="error"> (The email is already in use)</span>';
     }
 
-    if (!response.correctData[0] && !response.correctData[0]) {
+    if (!response.correctData[0] && !response.correctData[2]) {
         console.log("creamos el usuario");
         // Hemos dado de alta el usuario en la BBDD
         // Informamos al usuario
-        localStorage.setItem('baron', JSON.stringify(response.cookie));
+        localStorage.setItem('baron', JSON.stringify(response.token));
         console.log('localStorage ' + JSON.parse(localStorage.getItem('baron')));
         windowPopupMessage();
     }
@@ -221,14 +227,11 @@ function windowPopupMessage() {
     divContainer.appendChild(divMessage);
 
     setTimeout(async () => {
-        // TODO Realizar una petición para que el servidor me renderice el home.
         window.location.href = "http://localhost:3003/home";
-        
-        
-
     }, 3000);
 
 }
+
 
 //////////////////////
 // GLOBAL FUNCTIONS //
@@ -238,8 +241,8 @@ function getTheCookie() {
 
     let theCookie = JSON.parse(localStorage.getItem('baron'));
     return theCookie;
-    
 }
+
 
 //////////
 // MAIN //
@@ -270,8 +273,6 @@ function giveEvents() {
     suEmail.onblur = () => { validateEmail(suEmail.value) };
     suButton.onclick = () => { signUpCorrectData() };
 }
-
-
 
 function init() {
 

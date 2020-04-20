@@ -1,20 +1,12 @@
-// Requires
-let db = require('../connections/manager');
+//////////////
+// REQUIRES //
+//////////////
+// Functions
+const beerService = require('../../domain/services/beerService');
+// Models
+const {beerRequestViewModel} = require('../models/beerRequestViewModel');
 
-exports.findAllBeers = async (req, res) => {
+
+const findBeerByName = async () => {
 
 }
-
-exports.findOneBeer = (req, res) => {
-
-    // database.connect();
-    res.send(req.params.idBeer);
-}
-
-// Function to find one comment
-
-
-// Function to find all replies to one comment
-
-
-// Function to find
