@@ -41,6 +41,9 @@ async function checkUserInDatabase(userRequest) {
 
 const signIn = async (req, res) => {
 
+    console.log(req);
+    
+
     const userRequest = userRequestViewModel(req.body.username, req.body.password, req.body.email);
     
     let coincidences = await checkUserInDatabase(userRequest);

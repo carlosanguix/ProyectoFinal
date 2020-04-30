@@ -1,20 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Index - Beer Baron</title>
-    <link rel="stylesheet" type="text/css" href="styles/home.css">
-    <!--<link rel="stylesheet" type="text/css" href="styles/beer.css">-->
-    <script src="../scripts/home.js"></script>
+    <link rel="stylesheet" type="text/css" href="../styles/home.css">
+    <script src="../scripts/homeBeers.js" defer></script>
+    <script src="../scripts/nav.js" defer></script>
     <link rel="icon" href="../img/logo.png" sizes="196x196">
 </head>
-<body>
 
-    <%- include ('../components/header') %>
-    <div id="container">
-        
+<body>
+    <div id="header">
+        <div id="navLogo"><img src="../img/logo.png" id="logo"></div>
+        <div id="nav">
+            <div class="navItem<%if (locals.page == "home") {%> lighting<% } %>" id="home">Home</div>
+            <div class="navItem<%if (locals.page == "beers") {%> lighting<% } %>" id="beers">Beers</div>
+            <div class="navItem<%if (locals.page == "myProfile") {%> lighting<% } %>" id="myProfile">My profile</div>
+            <div class="navItem">More things</div>
+        </div>
+        <button id="logout"></button>
     </div>
+    <%if (page == "beers") {%>
+    <div id="container">
+        <%- include('../components/beersFilter') %>
+    </div>
+    <% } %>
 </body>
+
 </html>

@@ -1,10 +1,15 @@
 body {
   margin: 0;
-  background-color: burlywood;
+
+  .inputFilter {
+    border-radius: 4px 4px 4px 4px;
+    border: 0px solid;
+  }
 
   #header {
     display: flex;
     height: auto;
+    background-color: #c3a47c;
     width: 100%;
 
     #logo {
@@ -16,7 +21,7 @@ body {
       display: flex;
       align-self: center;
       justify-self: center;
-      background-color: #c3a47c;
+      background-color: lightcoral;
       border-radius: 31px 31px 31px 31px;
       margin: 0 100px 0 100px;
       justify-content: space-evenly;
@@ -34,7 +39,6 @@ body {
           box-shadow: inset 0px 0px 11px 2px rgba(0, 0, 0, 0.75);
           cursor: pointer;
         }
-
       }
       .lighting {
         background-color: red;
@@ -51,7 +55,14 @@ body {
       height: 30px;
       align-self: center;
       margin-right: 10px;
+      margin-left: 50px;
     }
   }
-  
+
+  #container {
+    width: 80%;
+    margin-left: 10%;
+    padding: 6px;
+    background-color: white;
+  }
 }
