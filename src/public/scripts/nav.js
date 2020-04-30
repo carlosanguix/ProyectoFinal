@@ -1,26 +1,19 @@
-function giveEvents() {
-    // navHome.onclick = () => {window.location.href = "http://localhost:3003/home";}
-    for (let i = 0; i < navItems.length; i++) {
-        navItems[i].onclick = loadItem;
-    }
-}
 
-function loadItem(ev) {
+async function loadItem(ev) {
 
-    document.querySelector('#container'). innerHTML = "";
-
-    for (let i = 0; i < navItems.length; i++) {
-        navItems[i].classList.remove('lighting');
-    }
-
-    ev.target.classList.add('lighting');
-}
-
-function init() {
-
-    navItems = document.querySelector('#nav').children;
+    console.log(ev.target);
     
-    giveEvents();
+/*
+    console.log(ev.target.id);
+    let url = 'http://localhost:3003/' + ev.target.id;
+    window.location.href = url;*/
+
+    console.log(ev.target.id);
+    
+    let url = `http://localhost:3003/home?page=` + ev.target.id;
+
+    window.location.href = url
+    
 }
 
 let navItems;
@@ -28,4 +21,6 @@ let navHome;
 let navBeers;
 let navMyProfile;
 
-window.onload = init;
+document.querySelectorAll('.navItem').forEach((ch) => {
+    ch.onclick = loadItem;
+});

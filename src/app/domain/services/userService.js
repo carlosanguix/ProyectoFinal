@@ -37,7 +37,6 @@ const createUser = async (userRequest) => {
 }
 
 
-
 module.exports = {
     giveMeId,
     giveMeUsername,

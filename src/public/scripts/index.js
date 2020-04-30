@@ -8,12 +8,16 @@ async function signInCorrectData() {
         username: siUser.value,
         password: siPass.value
     };
+    console.log(siData);
+    
 
     let url = `http://localhost:3003/signIn`;
     let settings = {
         method: 'POST',
         body: JSON.stringify(siData),
+        mode: 'cors',
         headers: {
+            'Access-Control-Allow-Origin': '*',
             'Content-Type': 'application/json'
         }
     }
@@ -227,7 +231,7 @@ function windowPopupMessage() {
     divContainer.appendChild(divMessage);
 
     setTimeout(async () => {
-        window.location.href = "http://localhost:3003/home";
+        window.location.href = "http://localhost:3003/home?page=home";
     }, 3000);
 
 }
@@ -240,6 +244,7 @@ function windowPopupMessage() {
 function getTheCookie() {
 
     let theCookie = JSON.parse(localStorage.getItem('baron'));
+    console.log(theCookie);
     return theCookie;
 }
 
@@ -277,8 +282,11 @@ function giveEvents() {
 function init() {
 
     cookie = getTheCookie();
-    if (cookie != null) {
-        window.location.href = 'http://localhost:3003/home';
+    console.log(cookie);
+    
+    
+    if (cookie !== null) {
+        window.location.href = 'http://localhost:3003/home?page=hom';
     }
 
     siUser = document.getElementById('siUser');

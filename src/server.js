@@ -3,12 +3,14 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const cors = require('cors')
 
 // Configuraciones
 const app = express();
 const port = process.env.port || 3003;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cors());
 /*
 app.use(bodyParser());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -18,13 +20,14 @@ app.use(cookieParser());
 app.set('views', path.join(__dirname, 'app/view/client/templates'));
 // app.use(express.static(path.join(__dirname, 'app/view/client')));
 app.use(express.static(path.join(__dirname, 'public')));
-app.set('view engine', 'ejs')
+app.set('view engine', 'ejs');
 
 // Rutas
 // EJS routes
-app.use('/', require('./app/view/routes/index.routes'));
+app.use('/', require('./app/view/routes/indexRoutes'));
 // Funcionality routes
-require('./app/view/routes/log.routes')(app);
+require('./app/view/routes/loginRoutes')(app);
+require('./app/view/routes/beersRoutes')(app);
 
 // Arrancando el servidor
 app.listen(port, () => {

@@ -1,9 +1,12 @@
 body {
-  margin: 0;
-  background-color: burlywood; }
+  margin: 0; }
+  body .inputFilter {
+    border-radius: 4px 4px 4px 4px;
+    border: 0px solid; }
   body #header {
     display: flex;
     height: auto;
+    background-color: #c3a47c;
     width: 100%; }
     body #header #logo {
       width: 100px;
@@ -12,7 +15,7 @@ body {
       display: flex;
       align-self: center;
       justify-self: center;
-      background-color: #c3a47c;
+      background-color: lightcoral;
       border-radius: 31px 31px 31px 31px;
       margin: 0 100px 0 100px;
       justify-content: space-evenly;
@@ -38,4 +41,10 @@ body {
       width: 40px;
       height: 30px;
       align-self: center;
-      margin-right: 10px; }
+      margin-right: 10px;
+      margin-left: 50px; }
+  body #container {
+    width: 80%;
+    margin-left: 10%;
+    padding: 6px;
+    background-color: white; }

@@ -6,13 +6,16 @@
   "scripts": {
     "dev": "nodemon src/server.js",
     "scssHome": "node-sass --watch src/app/view/client/scss/home.scss -o src/public/styles",
-    "scssBeer": "node-sass --watch src/app/view/client/scss/beer.scss -o src/public/styles"
+    "scssBeer": "node-sass --watch src/app/view/client/scss/beer.scss -o src/public/styles",
+    "scssFilter": "node-sass --watch src/app/view/client/scss/beerFilter.scss -o src/public/styles",
+    "scssBeersContainer": "node-sass --watch src/app/view/client/scss/beersContainer.scss -o src/public/styles"
   },
   "author": "Carlos Anguix Genovés",
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
     "ejs": "^3.0.2",
     "ejs-lint": "^1.1.0",
     "express": "^4.17.1",

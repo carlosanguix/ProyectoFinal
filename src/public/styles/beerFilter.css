@@ -1,0 +1,46 @@
+#filterContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 5px;
+  grid-template-areas: "name name name name" "origin category style ." "abv ibu spm upc" "orderBy . . ." ". applyFilters applyFilters .";
+  background-color: darkkhaki;
+  padding: 6px; }
+
+#nameFilter {
+  grid-area: name;
+  height: 30px;
+  padding-left: 4px; }
+
+#originFilter {
+  grid-area: origin; }
+
+#categoryFilter {
+  grid-area: category; }
+
+#styleFilter {
+  grid-area: style; }
+
+#abvFilter {
+  grid-area: abv; }
+
+#ibuFilter {
+  grid-area: ibu; }
+
+#spmFilter {
+  grid-area: spm; }
+
+#upcFilter {
+  grid-area: upc; }
+
+#orderBy {
+  grid-area: orderBy; }
+
+#applyFilters {
+  grid-area: applyFilters;
+  width: 50%;
+  margin-left: 25%;
+  align-self: center; }
+
+select,
+button {
+  height: 36px; }
