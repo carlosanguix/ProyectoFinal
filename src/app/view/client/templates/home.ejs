@@ -7,26 +7,33 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Index - Beer Baron</title>
     <link rel="stylesheet" type="text/css" href="../styles/home.css">
-    <script src="../scripts/homeBeers.js" defer></script>
-    <script src="../scripts/nav.js" defer></script>
     <link rel="icon" href="../img/logo.png" sizes="196x196">
 </head>
 
 <body>
     <div id="header">
         <div id="navLogo"><img src="../img/logo.png" id="logo"></div>
-        <div id="nav">
-            <div class="navItem<%if (locals.page == "home") {%> lighting<% } %>" id="home">Home</div>
-            <div class="navItem<%if (locals.page == "beers") {%> lighting<% } %>" id="beers">Beers</div>
-            <div class="navItem<%if (locals.page == "myProfile") {%> lighting<% } %>" id="myProfile">My profile</div>
-            <div class="navItem">More things</div>
-        </div>
+        <%- include('../components/nav', { page: page }) %>
         <button id="logout"></button>
     </div>
-    <%if (page == "beers") {%>
+
+    <% if (page == "home") { %>
+    <!--/////// HOME ///////-->
+
+    <% } %>
+
+    <% if (page == "beers") { %>
+    <!--/////// BEERS ///////-->
+    <script src="../scripts/homeBeers.js" defer></script>
     <div id="container">
-        <%- include('../components/beersFilter') %>
+        <%- include('../components/beersFilter', { filter: filter }) %>
+        <div id="beersContainer"></div>
     </div>
+    <% } %>
+
+    <% if (page == "myProfile") { %>
+    <!--/////// MY PROFILE ///////-->
+
     <% } %>
 </body>
 

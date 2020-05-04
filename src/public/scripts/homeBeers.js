@@ -13,13 +13,6 @@ function initializeVariables() {
     applyFilters = document.querySelector('#applyFilters');
 }
 
-async function fillInputFields() {
-
-    let URLfetch = 'http://localhost:3003/birras/collect';
-    let response = await fetch(URLfetch);
-    let data = await response.json();
-    console.log(data);
-}
 
 function giveEvents() {
 
@@ -46,5 +39,4 @@ let upcFilter;
 let orderByFilter;
 
 initializeVariables();
-fillInputFields();
 giveEvents();

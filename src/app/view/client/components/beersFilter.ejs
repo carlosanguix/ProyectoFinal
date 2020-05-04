@@ -3,33 +3,51 @@
     <input type="text" id="nameFilter" class="inputFilter" placeholder="name">
     <select name="origin" id="originFilter" class="inputFilter">
         <option value="" disabled selected>origin</option>
+        <% for (let i = 0; i < filter.origins.length; i++) { %>
+            <option value="<%= filter.origins[i] %>"><%= filter.origins[i] %></option>
+        <% } %>
     </select>
     <select name="category" id="categoryFilter" class="inputFilter">
         <option value="" disabled selected>category</option>
+        <% for (let i = 0; i < filter.categories.length; i++) { %>
+            <option value="<%= filter.categories[i] %>"><%= filter.categories[i] %></option>
+        <% } %>
     </select>
     <select name="style" id="styleFilter" class="inputFilter">
         <option value="" disabled selected>style</option>
+        <% for (let i = 0; i < filter.styles.length; i++) { %>
+            <option value="<%= filter.styles[i] %>"><%= filter.styles[i] %></option>
+        <% } %>
     </select>
     <select name="abv" id="abvFilter" class="inputFilter">
         <option value="" disabled selected>abv</option>
+        <% for (let i = 0; i <= filter.abv; i++) { %>
+            <option value="<%= i %>"><%= i %></option>
+        <% } %>
     </select>
     <select name="ibu" id="ibuFilter" class="inputFilter">
         <option value="" disabled selected>ibu</option>
+        <% for (let i = 0; i <= filter.ibu; i++) { %>
+            <option value="<%= i %>"><%= i %></option>
+        <% } %>
     </select>
     <select name="spm" id="spmFilter" class="inputFilter">
         <option value="" disabled selected>spm</option>
+        <% for (let i = 0; i <= filter.spm; i++) { %>
+            <option value="<%= i %>"><%= i %></option>
+        <% } %>
     </select>
     <select name="upc" id="upcFilter" class="inputFilter">
         <option value="" disabled selected>upc</option>
+        <% for (let i = 0; i <= filter.upc; i++) { %>
+            <option value="<%= i %>"><%= i %></option>
+        <% } %>
     </select>
     <select name="orderBy" id="orderBy" class="inputFilter">
         <option value="" disabled selected>order by</option>
-        <option value="noOrder">no order</option>
-        <option value="name">name</option>
-        <option value="bestRated">best rated</option>
-        <option value="abv">abv</option>
-        <option value="ibu">ibu</option>
-        <option value="spm">spm</option>
+        <% for (let i = 0; i < filter.orderBy.length; i++) { %>
+            <option value="<%= filter.orderBy[i] %>"><%= filter.orderBy[i] %></option>
+        <% } %>
     </select>
     <button id="applyFilters" class="">Apply filters</button>
 </div>

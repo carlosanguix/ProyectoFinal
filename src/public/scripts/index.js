@@ -286,7 +286,7 @@ function init() {
     
     
     if (cookie !== null) {
-        window.location.href = 'http://localhost:3003/home?page=hom';
+        window.location.href = 'http://localhost:3003/home?page=home';
     }
 
     siUser = document.getElementById('siUser');
