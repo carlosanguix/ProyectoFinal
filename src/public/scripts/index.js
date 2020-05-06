@@ -231,7 +231,9 @@ function windowPopupMessage() {
     divContainer.appendChild(divMessage);
 
     setTimeout(async () => {
-        window.location.href = "http://localhost:3003/home?page=home";
+        let hostLocation = window.location.hostname;
+        let portNumber = window.location.port;
+        window.location.href = "http://" + hostLocation + ":" + portNumber + "/home?page=home";
     }, 3000);
 
 }
@@ -286,7 +288,9 @@ function init() {
     
     
     if (cookie !== null) {
-        window.location.href = 'http://localhost:3003/home?page=home';
+        let hostLocation = window.location.hostname;
+        let portNumber = window.location.port;
+        window.location.href = "http://" + hostLocation + ":" + portNumber + "/home?page=home";
     }
 
     siUser = document.getElementById('siUser');

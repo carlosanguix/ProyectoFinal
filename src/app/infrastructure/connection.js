@@ -1,6 +1,16 @@
+// Functions for DB connect
+
+//////////////
+// REQUIRES //
+//////////////
+// Usability
 const mysql = require("mysql2/promise");
+// Models
 const { dbData } = require('./keys');
 
+///////////////
+// FUNCTIONS //
+///////////////
 const connectDB = async () => {
 
     let config = {

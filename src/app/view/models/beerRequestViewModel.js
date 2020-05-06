@@ -1,15 +1,21 @@
-const beerRequestViewModel = (name, categorieName, styleName, abv, ibu, srm, upc) => {
+const beerRequestViewModel = (name, origin, category, style, minAbv, maxAbv, minIbu, maxIbu, minSpm, maxSpm, minUpc, maxUpc) => {
     return {
         name: name,
-        categorie: categorieName,
-        style: styleName,
-        abv: abv,
-        ibu: ibu,
-        srm: srm,
-        upc: upc
+        origin: origin,
+        category: category,
+        style: style,
+        minAbv: minAbv,
+        maxAbv: maxAbv,
+        minIbu: minIbu,
+        maxIbu: maxIbu,
+        minSpm: minSpm,
+        maxSpm: maxSpm,
+        minUpc: minUpc,
+        maxUpc: maxUpc
     }
 }
 
 module.exports = {
     beerRequestViewModel
 }
+

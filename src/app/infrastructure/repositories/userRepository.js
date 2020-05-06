@@ -1,8 +1,18 @@
-const connections = require('../connection');
+// User functions for infrastructure layer
 
+//////////////
+// REQUIRES //
+//////////////
+// Usability
+const connections = require('../connection');
+// Models
+let {userData} = require('../tables/userData');
+
+///////////////
+// FUNCTIONS //
+///////////////
 const getID = async (user) => {
 
-    let {userData} = require('../tables/userData');
     const dbUser = userData(user.name, user.password, user.email);
     
     let connection = await connections.connectDB();
@@ -19,7 +29,6 @@ const getID = async (user) => {
 
 const createUser = async (user) => {
     
-    let {userData} = require('../tables/userData');
     const dbUser = userData(user.name, user.password, user.email);
     
     let connection = await connections.connectDB();
@@ -33,7 +42,6 @@ const getPassword = async (user) => {
 
     console.log('getPassword');
     
-    let {userData} = require('../tables/userData');
     const dbUser = userData(user.name, user.password, user.email);
 
     let connection = await connections.connectDB();
@@ -52,7 +60,6 @@ const getUsername = async (user) => {
 
     console.log('getUsername');
 
-    const {userData} = require('../tables/userData');
     let dbUser = userData(user.name, user.password, user.email);
 
     let connection = await connections.connectDB();
@@ -71,7 +78,6 @@ const getEmail = async (user) => {
 
     console.log('getEmail');
 
-    const {userData} = require('../tables/userData');
     let dbUser = userData(user.name, user.password, user.email);
 
     let connection = await connections.connectDB();

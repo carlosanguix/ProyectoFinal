@@ -1,3 +1,5 @@
+// Object user for infrastructure layer
+
 const userData = (name, password, email) => {
     return {
         name: name,

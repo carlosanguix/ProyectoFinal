@@ -1,3 +1,5 @@
+// Routes for pages requests
+
 const express = require('express');
 const controller = require('../controllers/indexController');
 const router = express.Router();

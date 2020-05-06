@@ -1,3 +1,5 @@
+// Routes for user requests
+
 const controller = require('../controllers/loginController');
 
 module.exports = (app) => {

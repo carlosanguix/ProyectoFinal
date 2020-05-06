@@ -1,19 +1,13 @@
 
 async function loadItem(ev) {
 
-    console.log(ev.target);
-    
-/*
     console.log(ev.target.id);
-    let url = 'http://localhost:3003/' + ev.target.id;
-    window.location.href = url;*/
-
-    console.log(ev.target.id);
-    
-    let url = `http://localhost:3003/home?page=` + ev.target.id;
+    let hostLocation = window.location.hostname;
+    let portNumber = window.location.port;
+    let url = "http://" + hostLocation + ":" + portNumber + "/home?page=" + ev.target.id;
 
     window.location.href = url
-    
+
 }
 
 let navItems;

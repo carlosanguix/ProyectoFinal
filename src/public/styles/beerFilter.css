@@ -1,46 +1,47 @@
 #filterContainer {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: repeat(8, 1fr);
   grid-gap: 5px;
-  grid-template-areas: "name name name name" "origin category style ." "abv ibu spm upc" "orderBy . . ." ". applyFilters applyFilters .";
+  grid-template-areas: "name name name name name name name name" "origin origin category category style style . ." "minAbv maxAbv minIbu maxIbu minSpm maxSpm minUpc maxUpc" "orderBy . . . . . . ." ". . . applyFilters applyFilters . . .";
   background-color: darkkhaki;
   padding: 6px; }
-
-#nameFilter {
-  grid-area: name;
-  height: 30px;
-  padding-left: 4px; }
-
-#originFilter {
-  grid-area: origin; }
-
-#categoryFilter {
-  grid-area: category; }
-
-#styleFilter {
-  grid-area: style; }
-
-#abvFilter {
-  grid-area: abv; }
-
-#ibuFilter {
-  grid-area: ibu; }
-
-#spmFilter {
-  grid-area: spm; }
-
-#upcFilter {
-  grid-area: upc; }
-
-#orderBy {
-  grid-area: orderBy; }
-
-#applyFilters {
-  grid-area: applyFilters;
-  width: 50%;
-  margin-left: 25%;
-  align-self: center; }
-
-select,
-button {
-  height: 36px; }
+  #filterContainer .input {
+    border-radius: 4px 4px 4px 4px;
+    border: 0px solid; }
+  #filterContainer #nameFilter {
+    grid-area: name;
+    height: 30px;
+    padding-left: 4px; }
+  #filterContainer #originFilter {
+    grid-area: origin; }
+  #filterContainer #categoryFilter {
+    grid-area: category; }
+  #filterContainer #styleFilter {
+    grid-area: style; }
+  #filterContainer #minAbvFilter {
+    grid-area: minAbv; }
+  #filterContainer #maxAbvFilter {
+    grid-area: maxAbv; }
+  #filterContainer #minIbuFilter {
+    grid-area: minIbu; }
+  #filterContainer #maxIbuFilter {
+    grid-area: maxIbu; }
+  #filterContainer #minSpmFilter {
+    grid-area: minSpm; }
+  #filterContainer #maxSpmFilter {
+    grid-area: maxSpm; }
+  #filterContainer #minUpcFilter {
+    grid-area: minUpc; }
+  #filterContainer #maxUpcFilter {
+    grid-area: maxUpc; }
+  #filterContainer #orderBy {
+    grid-area: orderBy; }
+  #filterContainer #applyFilters {
+    grid-area: applyFilters;
+    width: 50%;
+    margin-left: 25%;
+    align-self: center; }
+  #filterContainer select,
+  #filterContainer button {
+    cursor: pointer;
+    height: 36px; }

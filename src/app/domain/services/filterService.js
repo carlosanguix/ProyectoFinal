@@ -1,4 +1,11 @@
+// Filter functions for domain layer
+
+//////////////
+// REQUIRES //
+//////////////
+// Usability
 const filterRepository = require('../../infrastructure/repositories/filterRepository');
+// Models
 
 const giveMeOrigins = async () => {
 

@@ -1,57 +1,72 @@
 #filterContainer {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(8, 1fr);
     grid-gap: 5px;
     grid-template-areas:
-        "name name name name"
-        "origin category style ."
-        "abv ibu spm upc"
-        "orderBy . . ."
-        ". applyFilters applyFilters .";
-        background-color:darkkhaki;
-        padding: 6px;
-}
+        "name name name name name name name name"
+        "origin origin category category style style . ."
+        "minAbv maxAbv minIbu maxIbu minSpm maxSpm minUpc maxUpc"
+        "orderBy . . . . . . ."
+        ". . . applyFilters applyFilters . . .";
+    background-color: darkkhaki;
+    padding: 6px;
 
-#nameFilter {
-    grid-area: name;
-    height: 30px;
-    padding-left: 4px;
-}
-#originFilter {
-    grid-area: origin;
-}
-#categoryFilter {
-    grid-area: category;
-}
-#styleFilter {
-    grid-area: style;
-}
-#abvFilter {
-    grid-area: abv;
-}
-#ibuFilter {
-    grid-area: ibu;
-}
-#spmFilter {
-    grid-area: spm;
-}
-#upcFilter {
-    grid-area: upc;
-}
-#orderBy {
-    grid-area: orderBy;
-}
-#applyFilters {
-    grid-area: applyFilters;
-    width: 50%;
-    margin-left: 25%;
-    align-self: center;
-}
+    .input {
+        border-radius: 4px 4px 4px 4px;
+        border: 0px solid;
+    }
 
-input {
-}
+    #nameFilter {
+        grid-area: name;
+        height: 30px;
+        padding-left: 4px;
+    }
+    #originFilter {
+        grid-area: origin;
+    }
+    #categoryFilter {
+        grid-area: category;
+    }
+    #styleFilter {
+        grid-area: style;
+    }
+    #minAbvFilter {
+        grid-area: minAbv;
+    }
+    #maxAbvFilter {
+        grid-area: maxAbv;
+    }
+    #minIbuFilter {
+        grid-area: minIbu;
+    }
+    #maxIbuFilter {
+        grid-area: maxIbu;
+    }
+    #minSpmFilter {
+        grid-area: minSpm;
+    }
+    #maxSpmFilter {
+        grid-area: maxSpm;
+    }
+    #minUpcFilter {
+        grid-area: minUpc;
+    }
+    #maxUpcFilter {
+        grid-area: maxUpc;
+    }
+    #orderBy {
+        grid-area: orderBy;
+    }
+    #applyFilters {
+        grid-area: applyFilters;
+        width: 50%;
+        margin-left: 25%;
+        align-self: center;
+    }
 
-select,
-button {
-    height: 36px;
+    select,
+    button {
+        cursor: pointer;
+        height: 36px;
+    }
 }

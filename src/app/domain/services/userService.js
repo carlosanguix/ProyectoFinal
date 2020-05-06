@@ -1,4 +1,11 @@
+// User functions for domain layer
+
+//////////////
+// REQUIRES //
+//////////////
+// Usability
 const userRepository = require('../../infrastructure/repositories/userRepository');
+// Models
 const {userDomain} = require('../entities/userDomain');
 
 const giveMeId = async (userRequest) => {

@@ -1,0 +1,1 @@
+// Style functions for domain layer

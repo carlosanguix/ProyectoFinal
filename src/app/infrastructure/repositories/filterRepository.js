@@ -1,7 +1,16 @@
-const connections = require('../connection');
+// Filter functions for infrastructure layer
 
-// No tenemos una entidad del filtro dentro de tables, porque no es una entidad de la BBDD
-// es una entidad de la vista del cliente
+//////////////
+// REQUIRES //
+//////////////
+// Usability
+const connections = require('../connection');
+// Models
+// ** No tenemos una entidad del filtro dentro de tables, porque no es una entidad de la BBDD es una entidad de la vista del cliente
+
+///////////////
+// FUNCTIONS //
+///////////////
 const getOrigins = async () => {
 
     let connection = await connections.connectDB();

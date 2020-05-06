@@ -1,7 +1,17 @@
+// Controllers for render pages
 
+//////////////
+// REQUIRES //
+//////////////
+// Usability
 const filterService = require('../../domain/services/filterService');
+// Models
 const {filterViewModel} = require('../models/filterViewModel');
 
+
+///////////////
+// FUNCTIONS //
+///////////////
 const renderLogin = (req, res) => {
 
     res.render('index');

@@ -1,7 +1,8 @@
-// Objetos clave
-module.exports = { // Modulos para exportar
+// Object key for DB connect
 
-    // Datos BBDD
+module.exports = {
+
+    // Database data
     dbData: {
         host: '127.0.0.1', // TODO En caso de que la BBDD esté en local
         user: 'baron',

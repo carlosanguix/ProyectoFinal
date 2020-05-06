@@ -1,3 +1,5 @@
+// Object beer for infrastructure layer
+
 const beerData = (id, breweryId, name, catId, styleId, abv, ibu, srm, upc, filepath, descript) => {
     return {
         id: id,

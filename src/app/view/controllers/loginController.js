@@ -1,7 +1,9 @@
+// Controller for user requests
+
 //////////////
 // REQUIRES //
 //////////////
-// Functions
+// Usability
 const userService = require('../../domain/services/userService');
 // Models
 const {userRequestViewModel} = require('../models/userRequestViewModel');
@@ -43,7 +45,6 @@ const signIn = async (req, res) => {
 
     console.log(req);
     
-
     const userRequest = userRequestViewModel(req.body.username, req.body.password, req.body.email);
     
     let coincidences = await checkUserInDatabase(userRequest);
