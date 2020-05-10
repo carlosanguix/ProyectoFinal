@@ -34,11 +34,10 @@ const renderHome = async (req, res) => {
         let styles = await filterService.giveMeStyles();
         let maxAbv = await filterService.giveMeMaxAbv();
         let maxIbu = await filterService.giveMeMaxIbu();
-        let maxSpm = await filterService.giveMeMaxSpm();
-        let maxUpc = await filterService.giveMeMaxUpc();
+        let maxSrm = await filterService.giveMeMaxSrm();
 
-        let filterModel = filterViewModel(origins, categories, styles, maxAbv, 9, 8, 7);
-
+        let filterModel = filterViewModel(origins, categories, styles, maxAbv, maxIbu, maxSrm);
+        
         res.render('home.ejs', {
             page: page,
             filter: filterModel
