@@ -73,15 +73,34 @@ const getMaxAbv = async () => {
 
 const getMaxIbu = async () => {
 
+    let connection = await connections.connectDB();
+    let query = 'SELECT max(`ibu`) as maxIbu FROM `beers`';
+    let [rows] = await connection.execute(query);
+
+    let maxIbu;
+
+    rows.forEach(element => {
+        maxIbu = element.maxIbu;
+    });
+
+    return maxIbu;
 }
 
-const getMaxSpm = async () => {
+const getMaxSrm = async () => {
 
+    let connection = await connections.connectDB();
+    let query = 'SELECT max(`srm`) as maxSrm FROM `beers`';
+    let [rows] = await connection.execute(query);
+
+    let maxSrm;
+
+    rows.forEach(element => {
+        maxSrm = element.maxSrm;
+    });
+
+    return maxSrm;
 }
 
-const getMaxUpc = async () => {
-
-}
 
 
 module.exports = {
@@ -90,6 +109,5 @@ module.exports = {
     getStyles,
     getMaxAbv,
     getMaxIbu,
-    getMaxSpm,
-    getMaxUpc
+    getMaxSrm
 }

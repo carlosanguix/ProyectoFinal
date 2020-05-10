@@ -37,17 +37,12 @@ const giveMeMaxIbu = async () => {
     return maxIbu;
 }
 
-const giveMeMaxSpm = async () => {
+const giveMeMaxSrm = async () => {
 
-    let maxSpm = await filterRepository.getMaxSpm();
-    return maxSpm;
+    let maxSrm = await filterRepository.getMaxSrm();
+    return maxSrm;
 }
 
-const giveMeMaxUpc = async () => {
-
-    let maxUpc = await filterRepository.getMaxUpc();
-    return maxUpc;
-}
 
 module.exports = {
     giveMeOrigins,
@@ -55,6 +50,5 @@ module.exports = {
     giveMeStyles,
     giveMeMaxAbv,
     giveMeMaxIbu,
-    giveMeMaxSpm,
-    giveMeMaxUpc
+    giveMeMaxSrm
 }

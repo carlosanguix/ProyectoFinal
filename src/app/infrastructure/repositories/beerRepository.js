@@ -6,29 +6,86 @@
 // Usability
 const connections = require('../connection');
 // Models
-const {beerData} = require('../tables/beerData');
+const { beerData } = require('../tables/beerData');
+const { beerDomain } = require('../../domain/entities/beerDomain');
 
 ///////////////
 // FUNCTIONS //
 ///////////////
-const getBeersByParams = async (beerParams, order) => {
+const getBeersByParams = async (beerParams, order, pagination) => {
 
-    // TODO Tengo la misma forma del objeto hasta aqui!! No esta bien, deberia tener la forma de la BBDD
-    //const dbBeer = beerData();
-    
+    let params = [];
+
+    // Initial query
+    let query = 'SELECT sql_calc_found_rows `breweries`.`country`, `styles`.`style_name`, `categories`.`cat_name`, `beers`.* FROM `beers`';
+    query += ' INNER JOIN `breweries` ON `beers`.`brewery_id` = `breweries`.`id`';
+    query += ' INNER JOIN `styles` ON `beers`.`style_id` = `styles`.`id`';
+    query += ' INNER JOIN `categories` ON `beers`.`cat_id` = `categories`.`id`';
+    // Query to compare the name of the beer
+    query += ' WHERE `beers`.`name` LIKE ?';
+    params.push('%' + beerParams.name + '%');
+    // Query to compare the country of the beer
+    query += ' AND `breweries`.`country` LIKE ?';
+    params.push('%' + beerParams.origin + '%');
+    // Query to compare the style of the beer
+    query += ' AND `styles`.`style_name` LIKE ?';
+    params.push('%' + beerParams.style + '%');
+    // Query to compare the category of the beer
+    query += ' AND `categories`.`cat_name` LIKE ?';
+    params.push('%' + beerParams.category + '%');
+    // Query to compare the abv of the beer
+    query += ' AND `beers`.`abv` BETWEEN ? AND ?';
+    params.push(beerParams.minAbv, beerParams.maxAbv);
+    // Query to compare the ibu of the beer
+    query += ' AND `beers`.`ibu` BETWEEN ? AND ?';
+    params.push(beerParams.minIbu, beerParams.maxIbu);
+    // Query to compare the srm of the beer
+    query += ' AND `beers`.`srm` BETWEEN ? AND ?';
+    params.push(beerParams.minSrm, beerParams.maxSrm);
+    // Query to order the results
+    if (order != '') {
+        query += ' ORDER BY ' + order + ' ASC';
+    } else {
+        query += 'ORDER BY `beers`.`id`';
+    }
+    // Query to paging
+    query += ' LIMIT 10 OFFSET ' + pagination * 10;
+
+    console.log(query);
+    console.log(params);
+
 
     let connection = await connections.connectDB();
-    let query = 'SELECT `*` FROM `beers` WHERE `name` LIKE ?';
-    let [rows] = await connection.query(query, '%' + [beerParams.name] + '%');
+    let [rows] = await connection.query(query, params);
+
+    let reqReturn = {
+        allBeers: [],
+        totalNumberOfBeers: -1
+    }
+
+    let beers = [];
 
     if (rows.length != 0) {
-        console.log(rows);
-        return rows;
+        rows.forEach(beer => {
+            let beerDom = beerDomain(beer.id, beer.brewery_id, beer.name, beer.cat_id, beer.cat_name, beer.style_id, beer.style_name, beer.abv, beer.ibu, beer.srm, beer.filepath, beer.descript);
+            beers.push(beerDom);
+        });
+
+        reqReturn.allBeers = beers;
+
+        let foundRows = 'SELECT FOUND_ROWS() as finded';
+        let found = await connection.query(foundRows);
+
+        reqReturn.totalNumberOfBeers = found[0][0].finded;
+
+        console.log(reqReturn.allBeers[0]);
+        console.log(reqReturn.totalNumberOfBeers);
+
+        return reqReturn;
     } else {
-        return "";
+        return beers;
     }
 }
-
 
 module.exports = {
     getBeersByParams

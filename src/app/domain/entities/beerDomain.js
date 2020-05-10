@@ -1,23 +1,22 @@
 // Object beer for domain layer
 
-const beerDomain = (name, origin, category, style, minAbv, maxAbv, minIbu, maxIbu, minSpm, maxSpm, minUpc, maxUpc) => {
+const beerDomain = (id, breweryId, name, catId, catName, styleId, styleName, abv, ibu, srm, filepath, descript) => {
     return {
+        id: id,
+        breweryId: breweryId,
         name: name,
-        origin: origin,
-        category: category,
-        style: style,
-        minAbv: minAbv,
-        maxAbv: maxAbv,
-        minIbu: minIbu,
-        maxIbu: maxIbu,
-        minSpm: minSpm,
-        maxSpm: maxSpm,
-        minUpc: minUpc,
-        maxUpc: maxUpc
+        catId: catId,
+        catName: catName,
+        styleId: styleId,
+        styleName: styleName,
+        abv: abv,
+        ibu: ibu,
+        srm: srm,
+        filepath: filepath,
+        descript: descript
     }
 }
 
 module.exports = {
     beerDomain
 }
-

@@ -6,15 +6,17 @@
 // Usability
 const beerRepository = require('../../infrastructure/repositories/beerRepository');
 // Models
-const {beerDomain} = require('../entities/beerDomain');
+const {beerFilterDomain} = require('../entities/beerFilterDomain');
 
-const giveMeThisBeers = async (beerReqParams, order) => {
+const giveMeBeersByFilters = async (beerReqParams, order, pagination) => {
 
-    let beerParams = beerDomain(beerReqParams.name, beerReqParams.origin, beerReqParams.category, beerReqParams.style, beerReqParams.minAbv, beerReqParams.maxAbv, beerReqParams.minIbu, beerReqParams.maxIbu, beerReqParams.minSpm, beerReqParams.maxSpm, beerReqParams.minUpc, beerReqParams.maxUpc);
+    let beerParams = beerFilterDomain(beerReqParams.name, beerReqParams.origin, beerReqParams.category, beerReqParams.style, beerReqParams.minAbv, beerReqParams.maxAbv, beerReqParams.minIbu, beerReqParams.maxIbu, beerReqParams.minSrm, beerReqParams.maxSrm);
 
-    let beers = await beerRepository.getBeersByParams(beerParams, order);
+    let beerPagination = await beerRepository.getBeersByParams(beerParams, order, pagination);
+
+    return beerPagination;
 }
 
 module.exports = {
-    giveMeThisBeers
+    giveMeBeersByFilters
 }
