@@ -11,7 +11,13 @@ async function signInCorrectData() {
     console.log(siData);
     
 
-    let url = `http://localhost:3003/signIn`;
+    let hostLocation = window.location.hostname;
+    let portNumber = window.location.port;
+
+    console.log(portNumber);
+    
+
+    let url = 'http://' + hostLocation + ':' + portNumber + '/signIn';
     let settings = {
         method: 'POST',
         body: JSON.stringify(siData),
@@ -165,7 +171,10 @@ async function checkInUse(userData) {
 
     console.log(userData);
 
-    let url = `http://localhost:3003/signUp`;
+    let hostLocation = window.location.hostname;
+    let portNumber = window.location.port;
+
+    let url = 'http://' + hostLocation + ':' + portNumber + '/signUp';
     let settings = {
         method: 'POST',
         body: JSON.stringify(userData),
