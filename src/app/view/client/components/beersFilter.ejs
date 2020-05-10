@@ -25,56 +25,42 @@
     <select name="minAbv" id="minAbvFilter" class="inputFilter input">
         <option value="" disabled selected>min abv</option>
         <option value="">none</option> 
-        <% for (let i = 0; i <= filter.abv; i++) { %>
+        <% for (let i = 0; i <= filter.maxAbv; i++) { %>
             <option value="<%= i %>">min <%= i %>%</option>
         <% } %>
     </select>
     <select name="maxAbv" id="maxAbvFilter" class="inputFilter input">
         <option value="" disabled selected>max abv</option>
         <option value="">none</option> 
-        <% for (let i = 0; i <= filter.abv; i++) { %>
+        <% for (let i = 0; i <= filter.maxAbv; i++) { %>
             <option value="<%= i %>">max <%= i %>%</option>
         <% } %>
     </select>
     <select name="minIbu" id="minIbuFilter" class="inputFilter input">
         <option value="" disabled selected>min ibu</option>
         <option value="">none</option> 
-        <% for (let i = 0; i <= filter.ibu; i++) { %>
+        <% for (let i = 0; i <= filter.maxIbu; i++) { %>
             <option value="<%= i %>">min <%= i %></option>
         <% } %>
     </select>
     <select name="maxIbu" id="maxIbuFilter" class="inputFilter input">
         <option value="" disabled selected>max ibu</option>
         <option value="">none</option> 
-        <% for (let i = 0; i <= filter.ibu; i++) { %>
+        <% for (let i = 0; i <= filter.maxIbu; i++) { %>
             <option value="<%= i %>">max <%= i %></option>
         <% } %>
     </select>
-    <select name="minSpm" id="minSpmFilter" class="inputFilter input">
-        <option value="" disabled selected>min spm</option>
+    <select name="minSrm" id="minSrmFilter" class="inputFilter input">
+        <option value="" disabled selected>min srm</option>
         <option value="">none</option> 
-        <% for (let i = 0; i <= filter.spm; i++) { %>
+        <% for (let i = 0; i <= filter.maxSrm; i++) { %>
             <option value="<%= i %>">min <%= i %></option>
         <% } %>
     </select>
-    <select name="maxSpm" id="maxSpmFilter" class="inputFilter input">
-        <option value="" disabled selected>max spm</option>
+    <select name="maxSrm" id="maxSrmFilter" class="inputFilter input">
+        <option value="" disabled selected>max srm</option>
         <option value="none">none</option> 
-        <% for (let i = 0; i <= filter.spm; i++) { %>
-            <option value="<%= i %>">max <%= i %></option>
-        <% } %>
-    </select>
-    <select name="minUpc" id="minUpcFilter" class="inputFilter input">
-        <option value="" disabled selected>min upc</option>
-        <option value="none">none</option> 
-        <% for (let i = 0; i <= filter.upc; i++) { %>
-            <option value="<%= i %>">min <%= i %></option>
-        <% } %>
-    </select>
-    <select name="maxUpc" id="maxUpcFilter" class="inputFilter input">
-        <option value="" disabled selected>max upc</option>
-        <option value="">none</option> 
-        <% for (let i = 0; i <= filter.upc; i++) { %>
+        <% for (let i = 0; i <= filter.maxSrm; i++) { %>
             <option value="<%= i %>">max <%= i %></option>
         <% } %>
     </select>

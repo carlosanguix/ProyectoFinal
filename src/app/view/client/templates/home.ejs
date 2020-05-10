@@ -25,17 +25,23 @@
     <% if (page == "beers") { %>
     <!--/////// BEERS ///////-->
     <script src="../scripts/homeBeers.js" defer></script>
+    <link rel="stylesheet" type="text/css" href="../styles/homeBeers.css">
     <div id="container">
         <%- include('../components/beersFilter', { filter: filter }) %>
         <div id="beersContainer">
+            <link rel="stylesheet" type="text/css" href="../styles/beersContainer.css">
         </div>
+        
     </div>
+
     <% } %>
 
     <% if (page == "myProfile") { %>
     <!--/////// MY PROFILE ///////-->
 
     <% } %>
+
+    <%- include('../components/footer')  %>
 </body>
 
 </html>

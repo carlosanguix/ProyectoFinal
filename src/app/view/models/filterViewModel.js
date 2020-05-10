@@ -1,13 +1,12 @@
-const filterViewModel = (origins, categories, styles, abv, ibu, spm, upc, orderBy) => {
+const filterViewModel = (origins, categories, styles, maxAbv, maxIbu, maxSrm) => {
     return {
         origins: origins,
         categories: categories,
         styles: styles,
-        abv: abv,
-        ibu: ibu,
-        spm: spm,
-        upc: upc,
-        orderBy: ['name', 'bestRated', 'abv']
+        maxAbv: maxAbv,
+        maxIbu: maxIbu,
+        maxSrm: maxSrm,
+        orderBy: ['name', 'abv']
     }
 }
 

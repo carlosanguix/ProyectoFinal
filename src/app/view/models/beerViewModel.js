@@ -1,13 +1,17 @@
-const beerViewModel = (name, origin, category, style, minAbv, maxAbv, minIbu, maxIbu, minSpm, maxSpm, minUpc, maxUpc) => {
+const beerViewModel = (id, breweryId, name, catId, catName, styleId, styleName, abv, ibu, srm, filepath, descript) => {
     return {
+        id: id,
+        breweryId: breweryId,
         name: name,
-        origin: origin,
-        category: category,
-        style: style,
+        catId: catId,
+        catName: catName,
+        styleId: styleId,
+        styleName: styleName,
         abv: abv,
         ibu: ibu,
-        spm: spm,
-        upc: upc
+        srm: srm,
+        filepath: filepath,
+        descript: descript
     }
 }
 

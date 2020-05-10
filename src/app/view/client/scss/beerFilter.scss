@@ -1,15 +1,16 @@
 #filterContainer {
     display: grid;
-    grid-template-columns: repeat(8, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     grid-gap: 5px;
     grid-template-areas:
-        "name name name name name name name name"
-        "origin origin category category style style . ."
-        "minAbv maxAbv minIbu maxIbu minSpm maxSpm minUpc maxUpc"
-        "orderBy . . . . . . ."
-        ". . . applyFilters applyFilters . . .";
+        "name name name name name name"
+        "origin origin category category style style"
+        "minAbv maxAbv minIbu maxIbu minSrm maxSrm"
+        "orderBy . . . . ."
+        ". . applyFilters applyFilters . .";
     background-color: darkkhaki;
     padding: 6px;
+    border-radius: 4px 4px 4px 4px;
 
     .input {
         border-radius: 4px 4px 4px 4px;
@@ -42,17 +43,11 @@
     #maxIbuFilter {
         grid-area: maxIbu;
     }
-    #minSpmFilter {
-        grid-area: minSpm;
+    #minSrmFilter {
+        grid-area: minSrm;
     }
-    #maxSpmFilter {
-        grid-area: maxSpm;
-    }
-    #minUpcFilter {
-        grid-area: minUpc;
-    }
-    #maxUpcFilter {
-        grid-area: maxUpc;
+    #maxSrmFilter {
+        grid-area: maxSrm;
     }
     #orderBy {
         grid-area: orderBy;
