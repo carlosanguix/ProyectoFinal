@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Index - Beer Baron</title>
     <link rel="stylesheet" type="text/css" href="../styles/home.css">
+    <link href="//s.w.org/wp-includes/css/dashicons.css?20150710" rel="stylesheet" type="text/css">
     <link rel="icon" href="../img/logo.png" sizes="196x196">
 </head>
 
@@ -29,9 +30,13 @@
     <div id="container">
         <%- include('../components/beersFilter', { filter: filter }) %>
         <div id="beersContainer">
-            <link rel="stylesheet" type="text/css" href="../styles/beersContainer.css">
+            <div id="selectFilter">
+                <img id="izq" src="../img/flechaArribaIzq.png">
+                <img id="der" src="../img/flechaArribaDer.png">
+                <p>Select some filter to show some beers</p>
+            </div>
         </div>
-        
+
     </div>
 
     <% } %>

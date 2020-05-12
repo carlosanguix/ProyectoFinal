@@ -15,6 +15,12 @@ html {
   body {
     margin: 0;
     min-height: 100%;
+    background-repeat: no-repeat;
+    background-size: auto 2000px;
+
+    &::after {
+      opacity: 0.5;
+    }
 
     .inputFilter {
       border-radius: 4px 4px 4px 4px;
@@ -24,7 +30,6 @@ html {
     #header {
       display: flex;
       height: auto;
-      background-color: #c3a47c;
       width: 100%;
 
       #logo {
@@ -36,19 +41,20 @@ html {
         display: flex;
         align-self: center;
         justify-self: center;
-        background-color: lightcoral;
-        border-radius: 31px 31px 31px 31px;
-        margin: 0 100px 0 100px;
         justify-content: space-evenly;
         width: 100%;
-        font-size: x-large;
+        border-radius: 7px 7px 7px 7px;
+        background-color: var(--brown);
+        color: var(--yellow);
+        font-weight: bold;
 
         .navItem {
+          display: flex;
           width: inherit;
-          height: 37px;
-          text-align: center;
-          padding-top: 3px;
-          border-radius: 31px 31px 31px 31px;
+          align-items: center;
+          justify-content: center;
+          border-radius: 7px 7px 7px 7px;
+          height: 60px;
 
           &:hover {
             box-shadow: inset 0px 0px 11px 2px rgba(0, 0, 0, 0.75);
@@ -56,7 +62,8 @@ html {
           }
         }
         .lighting {
-          background-color: red;
+          background-color: var(--yellow);
+          color: var(--brown);
         }
       }
 
@@ -69,8 +76,8 @@ html {
         width: 40px;
         height: 30px;
         align-self: center;
-        margin-right: 10px;
-        margin-left: 50px;
+        margin-right: 30px;
+        margin-left: 30px;
       }
     }
 
@@ -92,10 +99,9 @@ html {
       justify-items: center;
       align-items: center;
       height: 250px;
-      margin-top: 60px;
       background-color: var(--brown);
       .h2Footer {
-        color: var(--light-yellow);
+        color: var(--yellow);
         margin: 0;
         margin-bottom: 10px;
         text-decoration: underline;

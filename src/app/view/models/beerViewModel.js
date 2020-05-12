@@ -1,4 +1,4 @@
-const beerViewModel = (id, breweryId, name, catId, catName, styleId, styleName, abv, ibu, srm, filepath, descript) => {
+const beerViewModel = (id, breweryId, name, catId, catName, styleId, styleName, abv, ibu, srm, filepath, descript, score, favorite) => {
     return {
         id: id,
         breweryId: breweryId,
@@ -11,7 +11,9 @@ const beerViewModel = (id, breweryId, name, catId, catName, styleId, styleName, 
         ibu: ibu,
         srm: srm,
         filepath: filepath,
-        descript: descript
+        descript: descript,
+        score: score,
+        favorite: favorite
     }
 }
 
