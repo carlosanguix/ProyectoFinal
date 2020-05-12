@@ -49,7 +49,7 @@ const getBeersByParams = async (beerParams, order, pagination) => {
         query += 'ORDER BY `beers`.`id`';
     }
     // Query to paging
-    query += ' LIMIT 10 OFFSET ' + pagination * 10;
+    query += ' LIMIT 20 OFFSET ' + pagination * 20;
 
     console.log(query);
     console.log(params);
@@ -78,8 +78,8 @@ const getBeersByParams = async (beerParams, order, pagination) => {
 
         reqReturn.totalNumberOfBeers = found[0][0].finded;
 
-        console.log(reqReturn.allBeers[0]);
-        console.log(reqReturn.totalNumberOfBeers);
+        // console.log(reqReturn.allBeers[0]);
+        // console.log(reqReturn.totalNumberOfBeers);
 
         return reqReturn;
     } else {
@@ -87,6 +87,41 @@ const getBeersByParams = async (beerParams, order, pagination) => {
     }
 }
 
+const getPunctuationOfThisBeer = async (idBeer) => {
+
+    let query = 'SELECT AVG(`score`) AS avgScore FROM `voting` WHERE `idBeer`=?';
+
+    let params = [idBeer]
+    let connection = await connections.connectDB();
+    let [rows] = await connection.query(query, [idBeer]);
+
+    if (rows.length != 0) {
+        return rows[0].avgScore;
+    } else {
+        return 0;
+    }
+}
+
+const isFavoriteBeer = async (idBeer, idUser) => {
+
+    let query = 'SELECT * FROM `favorites` WHERE `idBeer`=? && `idUser`=?';
+
+    console.log(idBeer, idUser);
+    
+    let params = [idBeer, idUser]
+    let connection = await connections.connectDB();
+    let [rows] = await connection.query(query, params);
+
+    if (rows.length != 0) {
+        console.log(rows[0]);
+        return true;
+    } else {
+        return false;
+    }
+}
+
 module.exports = {
-    getBeersByParams
+    getBeersByParams,
+    getPunctuationOfThisBeer,
+    isFavoriteBeer
 }
