@@ -11,6 +11,10 @@ const controller = require('../controllers/beersController');
 module.exports = (app) => {
 
     app.post('/beers', controller.findBeerByRequest);
-
+ 
     app.post('/beers/favorite', controller.setUserFavoriteBeer);
+
+    app.post('/beers/mostFavorite', controller.getMostFavorite);
+
+    app.post('/beers/bestRated', controller.getBestRatedBeer);
 }

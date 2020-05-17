@@ -31,10 +31,30 @@ const setUserFavoriteBeer = async (req, res) => {
     let idUser = req.body.idUser;
     let idBeer = req.body.idBeer;
 
-    let beerFavoriteStatus = beerService.checkAndSetUserFavoriteBeer(idBeer, idUser);
+    let beerFavoriteStatus = await beerService.checkAndSetUserFavoriteBeer(idBeer, idUser);
+
+    console.log(beerFavoriteStatus);
+    
+
+    res.send(beerFavoriteStatus);
 }
 
+const getMostFavorite = async (req, res) => {
+    
+    let mostFavorite = await beerService.giveMeMostFavoriteBeer(req.body.user);
+
+    res.send(mostFavorite)    
+}
+
+const getBestRatedBeer = async (req, res) => {
+
+    let bestRatedBeer = await beerService.giveMeBestRatedBeer(req.body.user);
+
+    res.send(bestRatedBeer);
+}
 module.exports = {
     findBeerByRequest,
-    setUserFavoriteBeer
+    setUserFavoriteBeer,
+    getMostFavorite,
+    getBestRatedBeer
 }
