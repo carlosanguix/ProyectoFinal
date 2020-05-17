@@ -7,6 +7,8 @@
 const connections = require('../connection');
 // Models
 const { beerData } = require('../tables/beerData');
+const { favoriteData } = require('../tables/favoriteData');
+const { votingData } = require('../tables/votingData');
 const { beerDomain } = require('../../domain/entities/beerDomain');
 
 ///////////////
@@ -54,7 +56,6 @@ const getBeersByParams = async (beerParams, order, pagination) => {
     console.log(query);
     console.log(params);
 
-
     let connection = await connections.connectDB();
     let [rows] = await connection.query(query, params);
 
@@ -66,6 +67,7 @@ const getBeersByParams = async (beerParams, order, pagination) => {
     let beers = [];
 
     if (rows.length != 0) {
+        
         rows.forEach(beer => {
             let beerDom = beerDomain(beer.id, beer.brewery_id, beer.name, beer.cat_id, beer.cat_name, beer.style_id, beer.style_name, beer.abv, beer.ibu, beer.srm, beer.filepath, beer.descript);
             beers.push(beerDom);
@@ -75,11 +77,9 @@ const getBeersByParams = async (beerParams, order, pagination) => {
 
         let foundRows = 'SELECT FOUND_ROWS() as finded';
         let found = await connection.query(foundRows);
+        connection.end();
 
         reqReturn.totalNumberOfBeers = found[0][0].finded;
-
-        // console.log(reqReturn.allBeers[0]);
-        // console.log(reqReturn.totalNumberOfBeers);
 
         return reqReturn;
     } else {
@@ -94,6 +94,7 @@ const getPunctuationOfThisBeer = async (idBeer) => {
     let params = [idBeer]
     let connection = await connections.connectDB();
     let [rows] = await connection.query(query, [idBeer]);
+    connection.end();
 
     if (rows.length != 0) {
         return rows[0].avgScore;
@@ -104,24 +105,110 @@ const getPunctuationOfThisBeer = async (idBeer) => {
 
 const isFavoriteBeer = async (idBeer, idUser) => {
 
-    let query = 'SELECT * FROM `favorites` WHERE `idBeer`=? && `idUser`=?';
+    let favoriteDB = favoriteData(idUser, idBeer)
 
-    console.log(idBeer, idUser);
+    let query = 'SELECT * FROM `favorites` WHERE `idBeer`=? AND `idUser`=?';
     
-    let params = [idBeer, idUser]
+    let params = [favoriteDB.idBeer, favoriteDB.idUser]
     let connection = await connections.connectDB();
     let [rows] = await connection.query(query, params);
+    connection.end();
 
     if (rows.length != 0) {
-        console.log(rows[0]);
         return true;
     } else {
         return false;
     }
 }
 
+const removeFavoriteBeer = async (idBeer, idUser) => {
+
+    let favoriteDB = favoriteData(idUser, idBeer)
+    
+    let query = 'DELETE FROM `favorites` WHERE `idBeer`=? AND `idUSer`=?';
+
+    let params = [favoriteDB.idBeer, favoriteDB.idUser]
+    let connection = await connections.connectDB();
+    let [rows] = await connection.query(query, params);
+    connection.end();
+
+    if (rows.length != 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+const addBeerToFavorite = async (idBeer, idUser) => {
+
+    let favoriteDB = favoriteData(idUser, idBeer)
+    
+    let query = 'INSERT INTO `favorites` (`idUser`, `idBeer`) VALUES (?, ?)';
+
+    let params = [favoriteDB.idUser, favoriteDB.idBeer]
+    let connection = await connections.connectDB();
+    let [rows] = await connection.query(query, params);
+    connection.end();
+
+    if (rows.length != 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+const getBeerByID = async (idBeer) => {
+
+    let query = 'SELECT * FROM `beers` WHERE `id`=?';
+
+    let connection = await connections.connectDB();
+    let [rows] = await connection.query(query, [idBeer]);
+    connection.end();
+
+    return rows[0];
+}
+
+const getMostFavoriteBeer = async () => {
+
+    let query = 'SELECT `idBeer` FROM `favorites` GROUP BY `idBeer` ORDER BY count(`idBeer`) DESC LIMIT 1 OFFSET 0';
+
+    let connection = await connections.connectDB();
+    let [rows] = await connection.query(query);
+    connection.end();
+
+    let idBeer = rows[0].idBeer;
+
+    let mostFavorite = await getBeerByID(idBeer);
+
+    return mostFavorite;
+}
+
+const getBestRatedBeer = async () => {
+
+    let query = 'SELECT avg(`voting`.`score`) AS vg, `breweries`.`country`, `styles`.`style_name`, `categories`.`cat_name`, `beers`.*';
+    query += ' FROM `beers` INNER JOIN `voting` ON `beers`.`id` = `voting`.`idBeer`';
+    query += ' INNER JOIN `breweries` ON `beers`.`brewery_id` = `breweries`.`id`';
+    query += ' INNER JOIN `styles` ON `beers`.`style_id` = `styles`.`id`';
+    query += ' INNER JOIN `categories` ON `beers`.`cat_id` = `categories`.`id`';
+    query += ' GROUP BY `voting`.`idBeer` ORDER BY vg DESC';
+
+    let connection = await connections.connectDB();
+    let [rows] = await connection.query(query);
+    connection.end();
+
+    console.log(rows[0]);
+
+    let bestRatedBeer = rows[0];
+
+    return bestRatedBeer;
+}
+
 module.exports = {
     getBeersByParams,
     getPunctuationOfThisBeer,
-    isFavoriteBeer
+    isFavoriteBeer,
+    removeFavoriteBeer,
+    addBeerToFavorite,
+    getMostFavoriteBeer,
+    getBestRatedBeer
 }

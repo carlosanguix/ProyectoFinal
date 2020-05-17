@@ -25,9 +25,49 @@ const giveMeBeersByFilters = async (beerReqParams, order, pagination, idUser) =>
 
 const checkAndSetUserFavoriteBeer = async (idBeer, idUser) => {
 
+    let statusFavorite = await beerRepository.isFavoriteBeer(idBeer, idUser);
+
+    if (statusFavorite) {
+        beerRepository.removeFavoriteBeer(idBeer, idUser);
+    } else {
+        beerRepository.addBeerToFavorite(idBeer, idUser);
+    }
+
+    return statusFavorite;
+}
+
+const giveMeMostFavoriteBeer = async (idUser) => {
+
+    let mostFavorite = await beerRepository.getMostFavoriteBeer(idUser);
+    let isFavorite = await beerRepository.isFavoriteBeer(mostFavorite.id, idUser);
+    let score = await beerRepository.getPunctuationOfThisBeer(mostFavorite.id);
+
+    let result = {
+        beer: mostFavorite,
+        favorite: isFavorite,
+        score: score
+    }
+
+    return result;
+}
+
+const giveMeBestRatedBeer = async (idUser) => {
+
+    let bestRatedBeer = await beerRepository.getBestRatedBeer();
+    let isFavorite = await beerRepository.isFavoriteBeer(bestRatedBeer.id, idUser);
+
+    let result = {
+        beer: bestRatedBeer,
+        favorite: isFavorite,
+        score: bestRatedBeer.vg
+    }
+
+    return result;
 }
 
 module.exports = {
     giveMeBeersByFilters,
-    checkAndSetUserFavoriteBeer
+    checkAndSetUserFavoriteBeer,
+    giveMeMostFavoriteBeer,
+    giveMeBestRatedBeer
 }
