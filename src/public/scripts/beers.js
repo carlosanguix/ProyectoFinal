@@ -60,6 +60,7 @@ async function buildRequest() {
         buildBeers(beers, beerParams);
 
         if (beers.totalNumberOfBeers > 10) {
+
             createPagination(beers, beerParams);
         }
     } else {
@@ -138,7 +139,6 @@ function buildBeers(beers) {
             star.classList.add('star');
 
             if (beer.score >= i) {
-                console.log(beer.score);
                 star.classList.add('lighting')
             }
             starRating.appendChild(star);
@@ -159,7 +159,6 @@ function giveBeerEvents(beer, cardBeer) {
 
     let stars = cardBeer.children[2];
     for (let i = 0; i < stars.children.length; i++) {
-        console.log(stars.children[i]);
         stars.children[i].onclick = (ev) => { sendScore(beer.id, parseInt(stars.children[i].getAttribute('value'))) }
     }
 
@@ -168,24 +167,49 @@ function giveBeerEvents(beer, cardBeer) {
 function sendScore(beer, score) {
 
     console.log(beer, score);
-    
+
 }
 
 function markBeerAsFavorite(beer, cardBeer) {
 
-    console.log(cardBeer.id);
-    console.log(JSON.parse(localStorage.getItem('baron')));
 
     if (cardBeer.children[0].children[1].children[0].classList.contains('lighting')) {
         cardBeer.children[0].children[1].children[0].classList.remove('lighting');
         sendFavoriteRequestInfo(beer, cardBeer);
     } else {
         cardBeer.children[0].children[1].children[0].classList.add('lighting');
-        sendFavoriteRequestInfo();
+        sendFavoriteRequestInfo(beer);
     }
 }
 
-function sendFavoriteRequestInfo() {
+async function sendFavoriteRequestInfo(beer) {
+
+    let favoriteInfo = {
+        idUser: JSON.parse(localStorage.getItem('baron')),
+        idBeer: beer.id
+    }
+
+    let hostLocation = window.location.hostname;
+    let portNumber = window.location.port;
+    let url = 'http://' + hostLocation + ':' + portNumber + '/beers/favorite';
+    let settings = {
+        method: 'POST',
+        body: JSON.stringify(favoriteInfo),
+        mode: 'cors',
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'application/json'
+        }
+    }
+
+    let URLfetch = await fetch(url, settings).catch((err) => {
+        console.log(err);
+    });
+
+    let favoriteStatus = await URLfetch.json().catch((err) => {
+        console.log(err);
+    });
+
 
 }
 
@@ -272,11 +296,21 @@ function initializeVariables() {
 
     orderByFilter = document.querySelector('#orderBy');
     applyFilters = document.querySelector('#applyFilters');
+
+    filterInfo = document.querySelector('#filterInfo');
 }
 
 function giveEvents() {
 
     applyFilters.onclick = () => { buildRequest() };
+
+    filterInfo.onmouseover = () => {
+        document.querySelector('#info').classList.add('visible');
+    }
+
+    filterInfo.onmouseout = () => {
+        document.querySelector('#info').classList.remove('visible');
+    }
 
     minAbvFilter.onchange = (ev) => { changeMaxAbvFilterOptions(ev) };
     maxAbvFilter.onchange = (ev) => { changeMinAbvFilterOptions(ev) };
@@ -322,6 +356,8 @@ let maxIbuFilter;
 let minSrmFilter;
 let maxSrmFilter;
 let orderByFilter;
+let applyFilters;
+let filterInfo;
 
 initializeVariables();
 giveEvents();

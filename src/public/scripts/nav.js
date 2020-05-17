@@ -4,7 +4,7 @@ async function loadItem(ev) {
     console.log(ev.target.id);
     let hostLocation = window.location.hostname;
     let portNumber = window.location.port;
-    let url = "http://" + hostLocation + ":" + portNumber + "/home?page=" + ev.target.id;
+    let url = "http://" + hostLocation + ":" + portNumber + "/" + ev.target.id;
 
     window.location.href = url
 

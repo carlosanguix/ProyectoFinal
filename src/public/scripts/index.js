@@ -242,7 +242,7 @@ function windowPopupMessage() {
     setTimeout(async () => {
         let hostLocation = window.location.hostname;
         let portNumber = window.location.port;
-        window.location.href = "http://" + hostLocation + ":" + portNumber + "/home?page=home";
+        window.location.href = "http://" + hostLocation + ":" + portNumber + "/home";
     }, 3000);
 
 }
@@ -299,7 +299,7 @@ function init() {
     if (cookie !== null) {
         let hostLocation = window.location.hostname;
         let portNumber = window.location.port;
-        window.location.href = "http://" + hostLocation + ":" + portNumber + "/home?page=home";
+        window.location.href = "http://" + hostLocation + ":" + portNumber + "/home";
     }
 
     siUser = document.getElementById('siUser');
