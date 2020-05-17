@@ -14,16 +14,18 @@
 <body>
     <div id="header">
         <div id="navLogo"><img src="../img/logo.png" id="logo"></div>
-        <%- include('../components/nav', { page: 'home' }) %>
+        <%- include('../components/nav', { page: 'beers' }) %>
         <button id="logout"></button>
     </div>
 
     <div id="container">
-        <!--/////// HOME ///////-->
-        <script src="../scripts/home.js" defer></script>
-        <link rel="stylesheet" type="text/css" href="../styles/home.css">
-        <link rel="stylesheet" type="text/css" href="../styles/cardBeer.css">
-        <%- include('../components/containerHome') %>
+        <!--/////// BEERS ///////-->
+        <script src="../scripts/beers.js" defer></script>
+        <link rel="stylesheet" type="text/css" href="../styles/beers.css">
+        <%- include('../components/beersFilter', { filter: filter }) %>
+        <div id="beersContainer">
+
+        </div>
     </div>
 
     <%- include('../components/footer')  %>
