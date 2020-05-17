@@ -1,0 +1,16 @@
+#favorites {
+  width: 80%;
+  height: 50px;
+  background-color: var(--brown);
+  border-radius: 4px 4px 4px 4px;
+  margin-left: 10%;
+  color: var(--yellow);
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+  #favorites img {
+    height: 40px; }
+  #favorites p {
+    margin-left: 50px;
+    margin-right: 50px; }

@@ -7,7 +7,7 @@
         "origin origin category category style style"
         "minAbv maxAbv minIbu maxIbu minSrm maxSrm"
         "orderBy . . . . ."
-        ". . applyFilters applyFilters . .";
+        ". . applyFilters applyFilters . info";
     padding: 6px;
     border: 2px solid grey;
     border-radius: 3px 3px 3px 3px;
@@ -60,11 +60,41 @@
         align-self: center;
     }
 
+    img {
+        grid-area: info;
+        width: 35px;
+        justify-self: right;
+    }
+
     select,
     button {
         cursor: pointer;
         height: 36px;
     }
+}
+
+#info {
+    width: 300px;
+    background-color:rgb(214, 214, 214);
+    position: absolute;
+    right: 13%;
+    top: 290px;
+    border-radius: 10px 10px 10px 10px;
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    padding: 0 20px 0 20px;
+    p {
+        font-size: 18px;
+        margin: 20px 0 20px 0;
+    }
+}
+.notVisible {
+    opacity: 0;
+    transition: opacity 0.2s;
+    z-index: -1;
+}
+.visible {
+    opacity: 1;
+    z-index: 9;
 }
 
 #paging {
@@ -102,21 +132,6 @@
     border-radius: 3px 3px 3px 3px;
     margin-top: 20px;
     padding-bottom: 70px;
-
-    #selectFilter {
-        img {
-            position: relative;
-            width: 100px;
-        }
-        #izq {
-            right: 240px;
-            top: 30px;
-        }
-        #der {
-            right: -290px;
-            top: 30px;
-        }
-    }
 
     .cardBeer {
         display: flex;
@@ -191,7 +206,6 @@
                     }
                 }
 
-                
                 .favme {
                     display: block;
                     font-size: ms(2);
@@ -215,7 +229,6 @@
                 .lighting {
                     color: red;
                 }
-
             }
         }
 
@@ -238,7 +251,7 @@
                 text-decoration: none;
                 text-align: center;
                 transition: color 0.3s;
-                
+
                 &:hover {
                     color: #ebd300;
                 }
