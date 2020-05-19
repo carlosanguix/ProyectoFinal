@@ -57,11 +57,15 @@ const renderMyProfile = async (req, res) => {
     });
 }
 
+const renderBeer = async (req, res) => {
 
+    res.render('oneBeer.ejs')
+}
 
 module.exports = {
     renderLogin,
     renderHome,
     renderBeers,
-    renderMyProfile
+    renderMyProfile,
+    renderBeer
 }

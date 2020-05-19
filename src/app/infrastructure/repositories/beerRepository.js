@@ -8,8 +8,8 @@ const connections = require('../connection');
 // Models
 const { beerData } = require('../tables/beerData');
 const { favoriteData } = require('../tables/favoriteData');
-const { votingData } = require('../tables/votingData');
 const { beerDomain } = require('../../domain/entities/beerDomain');
+const { votingData } = require('../tables/votingData');
 
 ///////////////
 // FUNCTIONS //
@@ -203,6 +203,49 @@ const getBestRatedBeer = async () => {
     return bestRatedBeer;
 }
 
+const isBeerAlreadyVoted = async (votingParams) => {
+
+    let votingDB = votingData(votingParams.idUser, votingParams.idBeer, votingParams.score);
+    let params = [votingDB.idUser, votingDB.idBeer];
+
+    let query = 'SELECT * FROM `voting` WHERE `idUser`=? AND `idBeer`=?';
+    let connection = await connections.connectDB();
+    let [rows] = await connection.query(query, params);
+    connection.end();
+
+    if (rows.length != 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+const updateScore = async (votingParams) => {
+
+    let votingDB = votingData(votingParams.idUser, votingParams.idBeer, votingParams.score);
+    let params = [votingDB.score, votingDB.idUser, votingDB.idBeer];
+
+    let query = 'UPDATE `voting` SET `score`=? WHERE `idUser`=? AND `idBeer`=?;';
+    let connection = await connections.connectDB();
+    let [rows] = await connection.query(query, params);
+    connection.end();
+
+    return 'updated';
+}
+
+const voteBeer = async (votingParams) => {
+
+    let votingDB = votingData(votingParams.idUser, votingParams.idBeer, votingParams.score);
+    let params = [votingDB.idUser, votingDB.idBeer, votingDB.score];
+
+    let query = 'INSERT INTO `voting` (`idUser`, `idBeer`, `score`) VALUES (?, ?, ?)';
+    let connection = await connections.connectDB();
+    let [rows] = await connection.query(query, params);
+    connection.end();
+    
+    return 'scored';
+}
+
 module.exports = {
     getBeersByParams,
     getPunctuationOfThisBeer,
@@ -210,5 +253,8 @@ module.exports = {
     removeFavoriteBeer,
     addBeerToFavorite,
     getMostFavoriteBeer,
-    getBestRatedBeer
+    getBestRatedBeer,
+    isBeerAlreadyVoted,
+    updateScore,
+    voteBeer
 }

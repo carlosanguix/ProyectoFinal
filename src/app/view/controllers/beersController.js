@@ -7,6 +7,7 @@
 const beerService = require('../../domain/services/beerService');
 // Models
 const { beerFilterRequestViewModel } = require('../models/BeerFilterRequestViewModel');
+const { votingRequestViewModel } = require('../models/votingRequestViewModel');
 
 
 ///////////////
@@ -52,9 +53,20 @@ const getBestRatedBeer = async (req, res) => {
 
     res.send(bestRatedBeer);
 }
+
+const voteBeer = async (req, res) => {
+
+    let votingRequest = votingRequestViewModel(req.body.idUser, req.body.idBeer, req.body.score);
+    
+    let beerHasBeenVoted = await beerService.voteBeer(votingRequest);
+
+    res.send(beerHasBeenVoted);
+}
+
 module.exports = {
     findBeerByRequest,
     setUserFavoriteBeer,
     getMostFavorite,
-    getBestRatedBeer
+    getBestRatedBeer,
+    voteBeer
 }

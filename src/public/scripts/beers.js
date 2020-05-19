@@ -162,12 +162,51 @@ function giveBeerEvents(beer, cardBeer) {
         stars.children[i].onclick = (ev) => { sendScore(beer.id, parseInt(stars.children[i].getAttribute('value'))) }
     }
 
+    cardBeer.children[0].children[0].children[0].onclick = (ev) => { openBeerInNewWindow(beer, cardBeer) };
 }
 
-function sendScore(beer, score) {
+async function openBeerInNewWindow(beer, cardBeer) {
+    console.log(beer);
+    console.log(cardBeer);
+    
+    let hostLocation = window.location.hostname;
+    let portNumber = window.location.port;
+    let url = "http://" + hostLocation + ":" + portNumber + "/beers/" + beer.id;
 
-    console.log(beer, score);
+    window.location.href = url
+}
 
+async function sendScore(idBeer, score) {
+
+    console.log(idBeer, score);
+    let vote = {
+        idUser: JSON.parse(localStorage.getItem('baron')),
+        idBeer: idBeer,
+        score: score
+    }
+
+    let hostLocation = window.location.hostname;
+    let portNumber = window.location.port;
+    let url = 'http://' + hostLocation + ':' + portNumber + '/beers/voteBeer';
+    let settings = {
+        method: 'POST',
+        body: JSON.stringify(vote),
+        mode: 'cors',
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'application/json'
+        }
+    }
+
+    let URLfetch = await fetch(url, settings).catch((err) => {
+        console.log(err);
+    });
+
+    let beerHasBeenVoted = await URLfetch.text().catch((err) => {
+        console.log(err);
+    });
+
+    console.log(beerHasBeenVoted);
 }
 
 function markBeerAsFavorite(beer, cardBeer) {

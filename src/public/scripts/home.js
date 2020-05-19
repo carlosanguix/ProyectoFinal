@@ -130,9 +130,37 @@ function giveBeerEvents(beer, cardBeer) {
 
 }
 
-function sendScore(beer, score) {
+async function sendScore(idBeer, score) {
 
-    console.log(beer, score);
+    console.log(idBeer, score);
+    let vote = {
+        idUser: JSON.parse(localStorage.getItem('baron')),
+        idBeer: idBeer,
+        score: score
+    }
+
+    let hostLocation = window.location.hostname;
+    let portNumber = window.location.port;
+    let url = 'http://' + hostLocation + ':' + portNumber + '/beers/voteBeer';
+    let settings = {
+        method: 'POST',
+        body: JSON.stringify(vote),
+        mode: 'cors',
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'application/json'
+        }
+    }
+
+    let URLfetch = await fetch(url, settings).catch((err) => {
+        console.log(err);
+    });
+
+    let beerHasBeenVoted = await URLfetch.text().catch((err) => {
+        console.log(err);
+    });
+
+    console.log(beerHasBeenVoted);
 }
 
 function markBeerAsFavorite(beer, cardBeer) {
@@ -140,7 +168,7 @@ function markBeerAsFavorite(beer, cardBeer) {
 
     if (cardBeer.children[0].children[1].children[0].classList.contains('lighting')) {
         cardBeer.children[0].children[1].children[0].classList.remove('lighting');
-        sendFavoriteRequestInfo(beer);
+        sendFavoriteRequestInfo(beer, cardBeer);
     } else {
         cardBeer.children[0].children[1].children[0].classList.add('lighting');
         sendFavoriteRequestInfo(beer);
@@ -153,10 +181,6 @@ async function sendFavoriteRequestInfo(beer) {
         idUser: JSON.parse(localStorage.getItem('baron')),
         idBeer: beer.id
     }
-
-    console.log(favoriteInfo);
-    
-    
 
     let hostLocation = window.location.hostname;
     let portNumber = window.location.port;

@@ -6,7 +6,8 @@
 // Usability
 const beerRepository = require('../../infrastructure/repositories/beerRepository');
 // Models
-const {beerFilterDomain} = require('../entities/beerFilterDomain');
+const { beerFilterDomain } = require('../entities/beerFilterDomain');
+const { votingDomain } = require('../entities/votingDomain');
 
 const giveMeBeersByFilters = async (beerReqParams, order, pagination, idUser) => {
 
@@ -65,9 +66,27 @@ const giveMeBestRatedBeer = async (idUser) => {
     return result;
 }
 
+const voteBeer = async (votingRequest) => {
+
+    let votingParams = votingDomain(votingRequest.idUser, votingRequest.idBeer, votingRequest.score);
+    
+    let beerAlreadyVoted = await beerRepository.isBeerAlreadyVoted(votingParams);
+
+    let beerStatus;
+
+    if (beerAlreadyVoted) {
+        beerStatus = await beerRepository.updateScore(votingParams);
+    } else {
+        beerStatus = await beerRepository.voteBeer(votingParams);
+    }
+
+    return beerStatus;
+}
+
 module.exports = {
     giveMeBeersByFilters,
     checkAndSetUserFavoriteBeer,
     giveMeMostFavoriteBeer,
-    giveMeBestRatedBeer
+    giveMeBestRatedBeer,
+    voteBeer
 }

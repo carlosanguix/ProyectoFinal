@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Index - Beer Baron</title>
+    <link rel="stylesheet" type="text/css" href="../styles/body.css">
+    <link rel="stylesheet" type="text/css" href="../styles/oneBeer.css">
+    <script src="../scripts/oneBeer.js" defer></script>
+    <link href="//s.w.org/wp-includes/css/dashicons.css?20150710" rel="stylesheet" type="text/css">
+    <link rel="icon" href="../img/logo.png" sizes="196x196">
+</head>
+
+<body>
+    <div id="header">
+        <div id="navLogo"><img src="../img/logo.png" id="logo"></div>
+        <%- include('../components/nav', { page: 'beers' }) %>
+        <button id="logout"></button>
+    </div>
+
+    <div id="container">
+        <div id="box">
+            <div id="name"><span>Hocus Pocus ajksdnknflaskdnf</span></div>
+            <div id="beer">
+                <div class="photo">
+                    <div id="score"></div>
+                    <img src="../img/unknown.png">
+                </div>
+                <div id="info">
+                    <div class="stats">
+                        <div class="stat">
+                            <div class="name"></div>
+                            <div class="number"></div>
+                        </div>
+                        <div class="stat">
+                            <div class="name"></div>
+                            <div class="number"></div>
+                        </div>
+                        <div class="stat">
+                            <div class="name"></div>
+                            <div class="number"></div>
+                            <div class="color"></div>
+                        </div>
+                    </div>
+                    <div class="stats">
+                        <div class="stat" id="origin">
+                            
+                        </div>
+                        <div class="stat" id="category">
+                            
+                        </div>
+                        <div class="stat" id="style">
+                            
+                        </div>
+                    </div>
+                    <div id="description">
+
+                    </div>
+                </div>
+            </div>
+
+            <div id="comments">
+                <div class="comment"></div>
+                <div class="comment"></div>
+                <div class="comment"></div>
+                <div class="comment"></div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <%- include('../components/footer')  %>
+</body>
+
+</html>

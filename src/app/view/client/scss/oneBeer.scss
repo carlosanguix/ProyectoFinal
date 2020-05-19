@@ -1,0 +1,90 @@
+#box {
+    display: flex;
+    flex-direction: column;
+
+    #name {
+        margin-top: 60px;
+        margin-bottom: 20px;
+        width: 100%;
+        font-size: 45px;
+        display: flex;
+        justify-content: center;
+    }
+
+    #beer {
+        display: flex;
+        margin-bottom: 40px;
+
+        .photo {
+            #score {
+                height: 35px;
+                width: 100%;
+                background-color: chartreuse;
+            }
+            min-width: 300px;
+            max-width: 300px;
+            min-height: 395px;
+            max-height: 430px;
+            background-color: red;
+
+            img {
+                width: 100%;
+            }
+        }
+        #info {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            margin-left: 10px;
+
+            .stats {
+                height: 50px;
+                display: flex;
+                flex-direction: row;
+                margin-bottom: 10px;
+
+                .stat {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                    margin-right: 25px;
+                    border: 1px solid black;
+                    min-width: 10px;
+
+                    .name {
+                        width: 80px;
+                        height: 90%;
+                        background-color: blue;
+                    }
+                    .number {
+                        width: 80px;
+                        height: 90%;
+                        background-color: red;
+                    }
+                    .color {
+                        width: 80px;
+                        height: 90%;
+                        background-color: brown;
+                    }
+                }
+            }
+            #description {
+                width: 100%;
+                min-height: 308px;
+                border: 1px solid black;
+            }
+        }
+    }
+
+    #comments {
+        width: 100%;
+
+        .comment {
+            width: 100%;
+            min-height: 100px;
+            border: 1px solid black;
+            margin-bottom: 20px;
+        }
+    }
+}
