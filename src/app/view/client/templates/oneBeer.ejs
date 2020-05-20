@@ -22,50 +22,72 @@
 
     <div id="container">
         <div id="box">
-            <div id="name"><span>Hocus Pocus ajksdnknflaskdnf</span></div>
+            <div id="refs">
+                <a href="http://localhost:3003/beers">beers</a>
+                →
+                <a href="http://localhost:3003/beers/<%= beer.id %>"><%= beer.name %> </a>
+            </div>
+            <div id="name"><span><%= beer.name %></span></div>
             <div id="beer">
                 <div class="photo">
-                    <div id="score"></div>
+                    <div id="score">
+                        <span <%if (beer.score >= 1) {%> class="lighting" <% } %>>★</span>
+                        <span <%if (beer.score >= 2) {%> class="lighting" <% } %>>★</span>
+                        <span <%if (beer.score >= 3) {%> class="lighting" <% } %>>★</span>
+                        <span <%if (beer.score >= 4) {%> class="lighting" <% } %>>★</span>
+                        <span <%if (beer.score >= 5) {%> class="lighting" <% } %>>★</span>
+                    </div>
                     <img src="../img/unknown.png">
                 </div>
                 <div id="info">
                     <div class="stats">
                         <div class="stat">
-                            <div class="name"></div>
-                            <div class="number"></div>
+                            <div class="name infostat"><span>ABV</span></div>
+                            <div class="number infostat"><span><%= beer.abv %>%</span></div>
                         </div>
                         <div class="stat">
-                            <div class="name"></div>
-                            <div class="number"></div>
+                            <div class="name infostat"><span>IBU</span></div>
+                            <div class="number infostat"><span><%= beer.ibu %></span></div>
                         </div>
                         <div class="stat">
-                            <div class="name"></div>
-                            <div class="number"></div>
+                            <div class="name infostat"><span>SRM</span></div>
+                            <div class="number infostat"><span><%= beer.srm %></span></div>
                             <div class="color"></div>
                         </div>
                     </div>
                     <div class="stats">
-                        <div class="stat" id="origin">
-                            
+                        <div class="stat" id="country">
+                            <span><%= beer.country %></span>
+                        </div>
+                        <div class="stat" id="state">
+                            <span><%= beer.state %></span>
                         </div>
                         <div class="stat" id="category">
-                            
+                            <span><%= beer.catName %></span>
                         </div>
                         <div class="stat" id="style">
-                            
+                            <span><%= beer.styleName %></span>
                         </div>
                     </div>
                     <div id="description">
-
+                        <p><%= beer.descript %></p>
                     </div>
                 </div>
             </div>
 
             <div id="comments">
-                <div class="comment"></div>
-                <div class="comment"></div>
-                <div class="comment"></div>
-                <div class="comment"></div>
+                <textarea name="commentary" id="commentary" ></textarea>
+                <button id="send">send</button>
+                <% beer.comments.forEach(comment => { %>
+                    <div class="comment">
+                        <div class="user">
+                            <img src="../img/user.png">
+                            <span> <%= comment.userName %>  </span>
+                        </div>
+                        <p> <%= comment.comment %> </p>
+                    </div>
+                <% }); %> 
+                
             </div>
         </div>
     </div>

@@ -2,13 +2,19 @@
     display: flex;
     flex-direction: column;
 
+    #refs {
+        margin-left: 22px;
+        font-size: 20px;
+    }
+
     #name {
         margin-top: 60px;
         margin-bottom: 20px;
         width: 100%;
         font-size: 45px;
         display: flex;
-        justify-content: center;
+        justify-content: left;
+        padding-left: 25px;
     }
 
     #beer {
@@ -19,29 +25,33 @@
             #score {
                 height: 35px;
                 width: 100%;
-                background-color: chartreuse;
+                font-size: 30px;
+                display: flex;
+                justify-content: space-evenly;
+                color: rgb(161, 161, 161);
+                .lighting {
+                    color: orange;
+                }
             }
             min-width: 300px;
             max-width: 300px;
             min-height: 395px;
             max-height: 430px;
-            background-color: red;
 
             img {
                 width: 100%;
             }
         }
         #info {
-            width: 100%;
+            width: 70%;
             display: flex;
             flex-direction: column;
             margin-left: 10px;
 
             .stats {
-                height: 50px;
+                flex-wrap: wrap;
                 display: flex;
                 flex-direction: row;
-                margin-bottom: 10px;
 
                 .stat {
                     display: flex;
@@ -51,40 +61,83 @@
                     margin-right: 25px;
                     border: 1px solid black;
                     min-width: 10px;
+                    min-height: 50px;
+                    margin-bottom: 10px;
+                    font-size: 25px;
 
+                    span {
+                        margin: 5px;
+                    }
+                    .infostat {
+                        height: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
                     .name {
                         width: 80px;
-                        height: 90%;
-                        background-color: blue;
                     }
                     .number {
+                        border-left: 1px solid black;
                         width: 80px;
-                        height: 90%;
-                        background-color: red;
                     }
                     .color {
+                        border-left: 1px solid black;
                         width: 80px;
-                        height: 90%;
-                        background-color: brown;
                     }
                 }
             }
             #description {
+                padding: 5px;
                 width: 100%;
                 min-height: 308px;
-                border: 1px solid black;
+                font-size: 25px;
             }
         }
     }
 
     #comments {
         width: 100%;
+        padding-right: 8px;
+        display: flex;
+        flex-direction: column;
+
+        textarea {
+            width: 100%;
+            min-height: 80px;
+            height: auto;
+            resize: none;
+            outline: none;
+        }
+
+        button {
+            width: 80px;
+            height: 30px;
+            align-self: flex-end;
+            margin: 3px -6px 10px 0;
+        }
 
         .comment {
             width: 100%;
             min-height: 100px;
-            border: 1px solid black;
+            border-bottom: 1px solid black;
             margin-bottom: 20px;
+
+            .user {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+
+                img {
+                    width: 40px;
+                    margin-right: 10px;
+                }
+                
+                span {
+                    font-size: 25px;
+                    border-bottom: 1px solid black;
+                }
+            }
         }
     }
 }

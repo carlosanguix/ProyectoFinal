@@ -5,8 +5,10 @@
 //////////////
 // Usability
 const filterService = require('../../domain/services/filterService');
+const beerService = require('../../domain/services/beerService');
 // Models
 const { filterViewModel } = require('../models/filterViewModel');
+const { beerDomain } = require('../../domain/entities/beerDomain');
 
 
 ///////////////
@@ -59,7 +61,9 @@ const renderMyProfile = async (req, res) => {
 
 const renderBeer = async (req, res) => {
 
-    res.render('oneBeer.ejs')
+    let beer = await beerService.giveMeThisBeerByID(req.params.id);
+
+    res.render('oneBeer.ejs', {beer: beer})
 }
 
 module.exports = {

@@ -8,6 +8,8 @@ const beerRepository = require('../../infrastructure/repositories/beerRepository
 // Models
 const { beerFilterDomain } = require('../entities/beerFilterDomain');
 const { votingDomain } = require('../entities/votingDomain');
+const { beerPage } = require('../../view/models/beerPageViewModel');
+const { commentViewModel } = require('../../view/models/commentViewModel');
 
 const giveMeBeersByFilters = async (beerReqParams, order, pagination, idUser) => {
 
@@ -83,10 +85,34 @@ const voteBeer = async (votingRequest) => {
     return beerStatus;
 }
 
+const giveMeThisBeerByID = async (idBeer) => {
+
+    let beer = await beerRepository.getBeerByID(idBeer);
+    let catName = await beerRepository.getCategoryNameByID(beer.cat_id);
+    let styleName = await beerRepository.getStyleNameByID(beer.style_id);
+    let brewery = await beerRepository.getBreweryNameByID(beer.brewery_id);
+    let score = await beerRepository.getPunctuationOfThisBeer(beer.id);
+    let comments = await beerRepository.getCommentsOfThisBeer(beer.id);
+
+    let allComments = [];
+
+    comments.forEach(comm => {
+        let commentsView = commentViewModel(comm.id, comm.idUser, comm.userName, comm.comment);
+        allComments.push(commentsView);
+    });
+
+    console.log(allComments);
+    
+    let beerView = beerPage(idBeer, beer.name, catName, styleName, beer.abv, beer.ibu, beer.srm, beer.filepath, beer.descript, brewery.name, brewery.state, brewery.country, brewery.website, score, allComments);
+    
+    return beerView;
+}
+
 module.exports = {
     giveMeBeersByFilters,
     checkAndSetUserFavoriteBeer,
     giveMeMostFavoriteBeer,
     giveMeBestRatedBeer,
-    voteBeer
+    voteBeer,
+    giveMeThisBeerByID
 }

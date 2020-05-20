@@ -21,8 +21,7 @@ router.get('/myProfile', (req, res) => {
 });
 
 router.get('/beers/:id', (req, res) => {
-    controller.renderBeer(req, res)
-    console.log(req.params.id);
+    controller.renderBeer(req, res);
 });
 
 module.exports = router;

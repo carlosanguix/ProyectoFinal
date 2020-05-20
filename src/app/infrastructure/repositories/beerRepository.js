@@ -10,6 +10,8 @@ const { beerData } = require('../tables/beerData');
 const { favoriteData } = require('../tables/favoriteData');
 const { beerDomain } = require('../../domain/entities/beerDomain');
 const { votingData } = require('../tables/votingData');
+const { commentData } = require('../tables/commentData');
+const { commentDomain } = require('../../domain/entities/commentDomain');
 
 ///////////////
 // FUNCTIONS //
@@ -246,6 +248,64 @@ const voteBeer = async (votingParams) => {
     return 'scored';
 }
 
+const getCategoryNameByID = async (catId) => {
+
+    let params = [catId];
+
+    let query = 'SELECT `cat_name` FROM `categories` WHERE `id`=?';
+    let connection = await connections.connectDB();
+    let [rows] = await connection.query(query, params);
+    connection.end();
+    
+    return rows[0].cat_name;
+}
+
+const getStyleNameByID = async (styleId) => {
+
+    let params = [styleId];
+
+    let query = 'SELECT `style_name` FROM `styles` WHERE `id`=?';
+    let connection = await connections.connectDB();
+    let [rows] = await connection.query(query, params);
+    connection.end();
+    
+    return rows[0].style_name;
+}
+
+const getBreweryNameByID = async (breweryId) => {
+
+    let params = [breweryId];
+
+    let query = 'SELECT `name`, `state`, `country`, `website` FROM `breweries` WHERE `id`=?';
+    let connection = await connections.connectDB();
+    let [rows] = await connection.query(query, params);
+    connection.end();
+    
+    return rows[0];
+}
+
+const getCommentsOfThisBeer = async (idBeer) => {
+
+    let params = [idBeer];
+
+    let query = 'SELECT `comments`.`id`, `comments`.`idUser`, `users`.`name`, `comments`.`comment` FROM `comments` INNER JOIN `users` WHERE `users`.`idUser` = `comments`.`idUser` AND `comments`.`idBeer`=?';
+    let connection = await connections.connectDB();
+    let [rows] = await connection.query(query, params);
+    connection.end();
+    
+    let comments = [];
+
+    rows.forEach(row => {
+        let commentDB = commentDomain(row.id, row.idUser, row.name, row.comment);
+        comments.push(commentDB);
+    });
+
+    console.log(comments);
+    
+    
+    return comments;
+}
+
 module.exports = {
     getBeersByParams,
     getPunctuationOfThisBeer,
@@ -256,5 +316,10 @@ module.exports = {
     getBestRatedBeer,
     isBeerAlreadyVoted,
     updateScore,
-    voteBeer
+    voteBeer,
+    getBeerByID,
+    getCategoryNameByID,
+    getStyleNameByID,
+    getBreweryNameByID,
+    getCommentsOfThisBeer
 }
