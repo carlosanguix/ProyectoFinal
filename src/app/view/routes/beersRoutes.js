@@ -19,4 +19,10 @@ module.exports = (app) => {
     app.post('/beers/bestRated', controller.getBestRatedBeer);
 
     app.post('/beers/voteBeer', controller.voteBeer);
+
+    app.post('/beers/commentBeer', controller.commentBeer);
+
+    app.post('/myProfile/liked', controller.getMyLikedBeers);
+
+    app.post('/myProfile/voted', controller.getMyVotedBeers);
 }

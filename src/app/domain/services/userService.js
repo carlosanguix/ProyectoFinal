@@ -43,11 +43,19 @@ const createUser = async (userRequest) => {
     return userCreatedID;
 }
 
+const giveMeUsernameByID = async (idUser) => {
+
+    let userName = await userRepository.getUsernameByID(idUser);
+
+    return userName;
+}
+
 
 module.exports = {
     giveMeId,
     giveMeUsername,
     giveMePassword,
     giveMeEmail,
-    createUser
+    createUser,
+    giveMeUsernameByID
 }

@@ -17,7 +17,7 @@
         padding-left: 25px;
     }
 
-    #beer {
+    .beer {
         display: flex;
         margin-bottom: 40px;
 
@@ -32,15 +32,19 @@
                 .lighting {
                     color: orange;
                 }
+                margin-bottom: 35px;
+            }
+            img {
+                display: block;
+                margin: auto;
+                max-width: 300px;
+                max-height: 400px;
             }
             min-width: 300px;
             max-width: 300px;
-            min-height: 395px;
+            min-height: 400px;
             max-height: 430px;
 
-            img {
-                width: 100%;
-            }
         }
         #info {
             width: 70%;

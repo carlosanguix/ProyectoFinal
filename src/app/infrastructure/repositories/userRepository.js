@@ -92,10 +92,25 @@ const getEmail = async (user) => {
     }
 }
 
+const getUsernameByID = async (idUser) => {
+
+    let connection = await connections.connectDB();
+    let query = 'SELECT `name` FROM `users` WHERE `idUser`=?';
+    let [rows] = await connection.execute(query, [idUser]);
+
+    if (rows.length != 0) {
+        console.log(rows[0].name);
+        return rows[0].name;
+    } else {
+        return "";
+    }
+}
+
 module.exports = {
     getEmail,
     getID,
     getPassword,
     createUser,
     getUsername,
+    getUsernameByID
 }

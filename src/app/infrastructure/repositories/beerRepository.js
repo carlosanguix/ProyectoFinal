@@ -91,6 +91,9 @@ const getBeersByParams = async (beerParams, order, pagination) => {
 
 const getPunctuationOfThisBeer = async (idBeer) => {
 
+    console.log(idBeer);
+    
+
     let query = 'SELECT AVG(`score`) AS avgScore FROM `voting` WHERE `idBeer`=?';
 
     let params = [idBeer]
@@ -306,6 +309,106 @@ const getCommentsOfThisBeer = async (idBeer) => {
     return comments;
 }
 
+const insertCommentBeer = async (commentReq) => {
+
+    let params = [commentReq.idUser, commentReq.idBeer, commentReq.comment]
+
+    let query = 'INSERT INTO `comments` (`idUser`, `idBeer`, `comment`) VALUES (?, ?, ?)';
+    let connection = await connections.connectDB();
+    let [rows] = await connection.query(query, params);
+    connection.end();
+
+    if (rows.affectedRows == 1) {
+        return true;
+    }
+}
+
+const getMyLikedBeers = async (page, idUser) => {
+
+    let params = [idUser]
+
+    let query = 'SELECT sql_calc_found_rows `breweries`.`country`, `styles`.`style_name`, `categories`.`cat_name`, `beers`.* FROM `beers`';
+    query += ' INNER JOIN `favorites` ON `beers`.`id`=`favorites`.`idBeer`';
+    query += ' INNER JOIN `breweries` ON `beers`.`brewery_id`=`breweries`.`id`';
+    query += ' INNER JOIN `styles` ON `beers`.`style_id`=`styles`.`id`';
+    query += ' INNER JOIN `categories` ON `beers`.`cat_id`=`categories`.`id`';
+    query += ' WHERE `favorites`.`idUser`=?';
+    query += ' LIMIT 20 OFFSET ' + page * 20;
+    
+    let connection = await connections.connectDB();
+    let [rows] = await connection.query(query, params);
+
+    let reqReturn = {
+        allBeers: [],
+        totalNumberOfBeers: -1
+    }
+
+    let beers = [];
+
+    if (rows.length != 0) {
+        
+        rows.forEach(beer => {
+            let beerDom = beerDomain(beer.id, beer.brewery_id, beer.name, beer.cat_id, beer.cat_name, beer.style_id, beer.style_name, beer.abv, beer.ibu, beer.srm, beer.filepath, beer.descript);
+            beers.push(beerDom);
+        });
+
+        reqReturn.allBeers = beers;
+
+        let foundRows = 'SELECT FOUND_ROWS() as finded';
+        let found = await connection.query(foundRows);
+        connection.end();
+
+        reqReturn.totalNumberOfBeers = found[0][0].finded;
+
+        return reqReturn;
+    } else {
+        return beers;
+    }
+}
+
+const getMyVotedBeers = async (page, idUser) => {
+
+    let params = [idUser]
+
+    let query = 'SELECT sql_calc_found_rows `breweries`.`country`, `styles`.`style_name`, `categories`.`cat_name`, `beers`.* FROM `beers`';
+    query += ' INNER JOIN `voting` ON `beers`.`id`=`voting`.`idBeer`';
+    query += ' INNER JOIN `breweries` ON `beers`.`brewery_id`=`breweries`.`id`';
+    query += ' INNER JOIN `styles` ON `beers`.`style_id`=`styles`.`id`';
+    query += ' INNER JOIN `categories` ON `beers`.`cat_id`=`categories`.`id`';
+    query += ' WHERE `voting`.`idUser`=?';
+    query += ' LIMIT 20 OFFSET ' + page * 20;
+    
+    let connection = await connections.connectDB();
+    let [rows] = await connection.query(query, params);
+
+    let reqReturn = {
+        allBeers: [],
+        totalNumberOfBeers: -1
+    }
+
+    let beers = [];
+
+    if (rows.length != 0) {
+        
+        rows.forEach(beer => {
+            let beerDom = beerDomain(beer.id, beer.brewery_id, beer.name, beer.cat_id, beer.cat_name, beer.style_id, beer.style_name, beer.abv, beer.ibu, beer.srm, beer.filepath, beer.descript);
+            beers.push(beerDom);
+        });
+
+        reqReturn.allBeers = beers;
+
+        let foundRows = 'SELECT FOUND_ROWS() as finded';
+        let found = await connection.query(foundRows);
+        connection.end();
+
+        reqReturn.totalNumberOfBeers = found[0][0].finded;
+
+        return reqReturn;
+    } else {
+        return beers;
+    }
+}
+
 module.exports = {
     getBeersByParams,
     getPunctuationOfThisBeer,
@@ -321,5 +424,8 @@ module.exports = {
     getCategoryNameByID,
     getStyleNameByID,
     getBreweryNameByID,
-    getCommentsOfThisBeer
+    getCommentsOfThisBeer,
+    insertCommentBeer,
+    getMyLikedBeers,
+    getMyVotedBeers
 }

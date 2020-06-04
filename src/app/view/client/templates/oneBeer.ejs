@@ -28,7 +28,7 @@
                 <a href="http://localhost:3003/beers/<%= beer.id %>"><%= beer.name %> </a>
             </div>
             <div id="name"><span><%= beer.name %></span></div>
-            <div id="beer">
+            <div id="<%= beer.id %>" class="beer">
                 <div class="photo">
                     <div id="score">
                         <span <%if (beer.score >= 1) {%> class="lighting" <% } %>>★</span>
@@ -37,7 +37,11 @@
                         <span <%if (beer.score >= 4) {%> class="lighting" <% } %>>★</span>
                         <span <%if (beer.score >= 5) {%> class="lighting" <% } %>>★</span>
                     </div>
+                    <% if (beer.filepath != "") { %>
+                    <img src="../img/<%= beer.filepath %> ">
+                    <% } else { %>
                     <img src="../img/unknown.png">
+                    <% } %>
                 </div>
                 <div id="info">
                     <div class="stats">
@@ -76,18 +80,18 @@
             </div>
 
             <div id="comments">
-                <textarea name="commentary" id="commentary" ></textarea>
+                <textarea name="commentary" id="commentary"></textarea>
                 <button id="send">send</button>
                 <% beer.comments.forEach(comment => { %>
-                    <div class="comment">
-                        <div class="user">
-                            <img src="../img/user.png">
-                            <span> <%= comment.userName %>  </span>
-                        </div>
-                        <p> <%= comment.comment %> </p>
+                <div class="comment">
+                    <div class="user">
+                        <img src="../img/user.png">
+                        <span> <%= comment.userName %> </span>
                     </div>
-                <% }); %> 
-                
+                    <p> <%= comment.comment %> </p>
+                </div>
+                <% }); %>
+
             </div>
         </div>
     </div>

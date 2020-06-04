@@ -22,10 +22,20 @@
     <script src="../scripts/myProfile.js" defer></script>
     <link rel="stylesheet" type="text/css" href="../styles/myProfile.css">
 
-    <div id="favorites">
-        <img src="../img/flechaAbajoIzq.png">
-        <p>My favorite beers</p>
-        <img src="../img/flechaAbajoDer.png">
+    <div id="container">
+        <div id="boxes">
+            <button class="tablink" id="voted" onclick="openPage('votedContainer', this, 'red')">My voted beers</button>
+            <button class="tablink" id="liked" onclick="openPage('likedContainer', this, 'green')">My liked beers</button>
+        </div>
+        <div id="votedContainer" class="tabcontent">
+            asdas
+        </div>
+
+        <div id="likedContainer" class="tabcontent">
+            
+        </div>
+
+        
     </div>
     <%- include('../components/footer')  %>
 </body>

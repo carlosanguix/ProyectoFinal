@@ -5,9 +5,11 @@
 //////////////
 // Usability
 const beerService = require('../../domain/services/beerService');
+const userService = require('../../domain/services/userService');
 // Models
 const { beerFilterRequestViewModel } = require('../models/BeerFilterRequestViewModel');
 const { votingRequestViewModel } = require('../models/votingRequestViewModel');
+const { commentRequestViewModel } = require('../models/commentRequestViewModel');
 
 
 ///////////////
@@ -63,10 +65,42 @@ const voteBeer = async (req, res) => {
     res.send(beerHasBeenVoted);
 }
 
+const commentBeer = async (req, res) => {
+
+    let commentRequest = commentRequestViewModel(req.body.idUser, req.body.idBeer, req.body.comment);
+
+    let commented = await beerService.commentBeer(commentRequest);
+    let userName = await userService.giveMeUsernameByID(req.body.idUser);
+
+    let resp = {
+        username: userName,
+        commented: commented
+    }
+
+    res.send(resp);
+}
+
+const getMyLikedBeers = async (req, res) => {
+
+    let likedBeers = await beerService.giveMeMyLikedBeers(req.body.page, req.body.idUser);
+
+    res.send(likedBeers);
+}
+
+const getMyVotedBeers = async (req, res) => {
+
+    let votedBeers = await beerService.giveMeMyVotedBeers(req.body.page, req.body.idUser);
+
+    res.send(votedBeers);
+}
+
 module.exports = {
     findBeerByRequest,
     setUserFavoriteBeer,
     getMostFavorite,
     getBestRatedBeer,
-    voteBeer
+    voteBeer,
+    commentBeer,
+    getMyLikedBeers,
+    getMyVotedBeers
 }

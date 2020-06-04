@@ -22,6 +22,8 @@ async function buildRequest() {
         page: 0,
         idUser: idUSerLocalStorage
     };
+    console.log(beerParams);
+    
 
     // ABV Filter
     if (beerParams.beer.minAbv == '') {
@@ -64,6 +66,10 @@ async function buildRequest() {
             createPagination(beers, beerParams);
         }
     } else {
+        console.log('hola');
+
+        document.querySelector('#beersContainer').innerHTML = '';
+        
         let advertisement = document.createElement('div');
         advertisement.id = 'noBeers';
         advertisement.innerHTML += `
@@ -97,6 +103,9 @@ async function giveMeThisBeers(beerParams) {
         console.log(err);
     });
 
+    console.log(beers);
+    
+
     return beers;
 }
 
@@ -110,9 +119,12 @@ function buildBeers(beers) {
         cardBeer.classList = 'cardBeer';
         cardBeer.id = beer.id;
 
+        console.log(beer.filepath);
+        
+
         let imgSrc = 'unknown.png';
-        if (beers.filepath != undefined) {
-            imgSrc = beers.filepath;
+        if (beer.filepath != "") {
+            imgSrc = beer.filepath;
         }
 
         cardBeer.innerHTML += `
@@ -281,7 +293,7 @@ async function chargeNextPagingBeers(beers, beerParams) {
 
     let numPage = parseInt(document.querySelector('#pagingNumber').getAttribute('value'));
 
-    if (numPage + 1 < beers.totalNumberOfBeers / 10) {
+    if (numPage + 1 < beers.totalNumberOfBeers / 20) {
         numPage += 1;
         document.querySelector('#pagingNumber').setAttribute('value', numPage);
         document.querySelector('#pagingNumber').innerHTML = numPage + 1;

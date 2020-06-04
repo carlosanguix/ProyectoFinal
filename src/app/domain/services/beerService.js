@@ -17,11 +17,16 @@ const giveMeBeersByFilters = async (beerReqParams, order, pagination, idUser) =>
 
     let beerPagination = await beerRepository.getBeersByParams(beerParams, order, pagination);
 
-    for (let i = 0; i < beerPagination.allBeers.length; i++) {
-        
-        beerPagination.allBeers[i].score = await beerRepository.getPunctuationOfThisBeer(beerPagination.allBeers[i].id);
-        beerPagination.allBeers[i].favorite = await beerRepository.isFavoriteBeer(beerPagination.allBeers[i].id, idUser);
+    console.log(beerPagination.length);
+
+    if (beerPagination.length != 0) {
+        for (let i = 0; i < beerPagination.allBeers.length; i++) {
+
+            beerPagination.allBeers[i].score = await beerRepository.getPunctuationOfThisBeer(beerPagination.allBeers[i].id);
+            beerPagination.allBeers[i].favorite = await beerRepository.isFavoriteBeer(beerPagination.allBeers[i].id, idUser);
+        }
     }
+
 
     return beerPagination;
 }
@@ -71,7 +76,7 @@ const giveMeBestRatedBeer = async (idUser) => {
 const voteBeer = async (votingRequest) => {
 
     let votingParams = votingDomain(votingRequest.idUser, votingRequest.idBeer, votingRequest.score);
-    
+
     let beerAlreadyVoted = await beerRepository.isBeerAlreadyVoted(votingParams);
 
     let beerStatus;
@@ -102,10 +107,48 @@ const giveMeThisBeerByID = async (idBeer) => {
     });
 
     console.log(allComments);
-    
+
     let beerView = beerPage(idBeer, beer.name, catName, styleName, beer.abv, beer.ibu, beer.srm, beer.filepath, beer.descript, brewery.name, brewery.state, brewery.country, brewery.website, score, allComments);
-    
+
     return beerView;
+}
+
+const commentBeer = async (commentReq) => {
+
+    console.log(commentReq);
+    let commented = await beerRepository.insertCommentBeer(commentReq);
+
+    return commented;
+}
+
+const giveMeMyLikedBeers = async (page, idUser) => {
+
+    let beerPagination = await beerRepository.getMyLikedBeers(page, idUser);
+
+    for (let i = 0; i < beerPagination.allBeers.length; i++) {
+
+        beerPagination.allBeers[i].score = await beerRepository.getPunctuationOfThisBeer(beerPagination.allBeers[i].id);
+        beerPagination.allBeers[i].favorite = await beerRepository.isFavoriteBeer(beerPagination.allBeers[i].id, idUser);
+    }
+
+    return beerPagination;
+}
+
+const giveMeMyVotedBeers = async (page, idUser) => {
+
+    let beerPagination = await beerRepository.getMyVotedBeers(page, idUser);
+
+    console.log(beerPagination.length);
+    
+
+    for (let i = 0; i < beerPagination.allBeers.length; i++) {
+
+        beerPagination.allBeers[i].score = await beerRepository.getPunctuationOfThisBeer(beerPagination.allBeers[i].id);
+        beerPagination.allBeers[i].favorite = await beerRepository.isFavoriteBeer(beerPagination.allBeers[i].id, idUser);
+    }
+
+
+    return beerPagination;
 }
 
 module.exports = {
@@ -114,5 +157,8 @@ module.exports = {
     giveMeMostFavoriteBeer,
     giveMeBestRatedBeer,
     voteBeer,
-    giveMeThisBeerByID
+    giveMeThisBeerByID,
+    commentBeer,
+    giveMeMyLikedBeers,
+    giveMeMyVotedBeers
 }
