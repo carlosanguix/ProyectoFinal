@@ -116,9 +116,9 @@ const giveMeThisBeerByID = async (idBeer) => {
 const commentBeer = async (commentReq) => {
 
     console.log(commentReq);
-    let commented = await beerRepository.insertCommentBeer(commentReq);
+    let idComment = await beerRepository.insertCommentBeer(commentReq);
 
-    return commented;
+    return idComment;
 }
 
 const giveMeMyLikedBeers = async (page, idUser) => {
@@ -151,6 +151,11 @@ const giveMeMyVotedBeers = async (page, idUser) => {
     return beerPagination;
 }
 
+const removeComment = async (idComment) => {
+
+    let commentRemoved = await beerRepository.removeComment(idComment);
+}
+
 module.exports = {
     giveMeBeersByFilters,
     checkAndSetUserFavoriteBeer,
@@ -160,5 +165,6 @@ module.exports = {
     giveMeThisBeerByID,
     commentBeer,
     giveMeMyLikedBeers,
-    giveMeMyVotedBeers
+    giveMeMyVotedBeers,
+    removeComment
 }

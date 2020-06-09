@@ -69,12 +69,13 @@ const commentBeer = async (req, res) => {
 
     let commentRequest = commentRequestViewModel(req.body.idUser, req.body.idBeer, req.body.comment);
 
-    let commented = await beerService.commentBeer(commentRequest);
+    let idComment = await beerService.commentBeer(commentRequest);
     let userName = await userService.giveMeUsernameByID(req.body.idUser);
 
     let resp = {
+        idComment: idComment,
         username: userName,
-        commented: commented
+        commented: true
     }
 
     res.send(resp);
@@ -94,6 +95,12 @@ const getMyVotedBeers = async (req, res) => {
     res.send(votedBeers);
 }
 
+const removeComment = async (req, res) => {
+
+    let commentRemoved = await beerService.removeComment(req.body.idComment);
+
+}
+
 module.exports = {
     findBeerByRequest,
     setUserFavoriteBeer,
@@ -102,5 +109,6 @@ module.exports = {
     voteBeer,
     commentBeer,
     getMyLikedBeers,
-    getMyVotedBeers
+    getMyVotedBeers,
+    removeComment
 }

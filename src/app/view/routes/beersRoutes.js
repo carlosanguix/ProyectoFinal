@@ -25,4 +25,6 @@ module.exports = (app) => {
     app.post('/myProfile/liked', controller.getMyLikedBeers);
 
     app.post('/myProfile/voted', controller.getMyVotedBeers);
+
+    app.post('/oneBeer/removeComment', controller.removeComment);
 }

@@ -22,13 +22,9 @@
 
     <div id="container">
         <div id="box">
-            <div id="refs">
-                <a href="http://localhost:3003/beers">beers</a>
-                →
-                <a href="http://localhost:3003/beers/<%= beer.id %>"><%= beer.name %> </a>
-            </div>
+
             <div id="name"><span><%= beer.name %></span></div>
-            <div id="<%= beer.id %>" class="beer">
+            <div idBeer="<%= beer.id %>" class="beer">
                 <div class="photo">
                     <div id="score">
                         <span <%if (beer.score >= 1) {%> class="lighting" <% } %>>★</span>
@@ -56,7 +52,6 @@
                         <div class="stat">
                             <div class="name infostat"><span>SRM</span></div>
                             <div class="number infostat"><span><%= beer.srm %></span></div>
-                            <div class="color"></div>
                         </div>
                     </div>
                     <div class="stats">
@@ -83,8 +78,8 @@
                 <textarea name="commentary" id="commentary"></textarea>
                 <button id="send">send</button>
                 <% beer.comments.forEach(comment => { %>
-                <div class="comment">
-                    <div class="user">
+                <div class="comment" id="<%= comment.id %>">
+                    <div class="user" id="<%= comment.idUser %>">
                         <img src="../img/user.png">
                         <span> <%= comment.userName %> </span>
                     </div>

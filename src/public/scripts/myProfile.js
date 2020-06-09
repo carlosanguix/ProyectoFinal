@@ -122,8 +122,8 @@ function buildBeers(beers, containerBeers) {
         cardBeer.id = beer.id;
 
         let imgSrc = 'unknown.png';
-        if (beers.filepath != undefined) {
-            imgSrc = beers.filepath;
+        if (beer.filepath != "") {
+            imgSrc = beer.filepath;
         }
 
         cardBeer.innerHTML += `

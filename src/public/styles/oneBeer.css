@@ -96,6 +96,11 @@
       min-height: 100px;
       border-bottom: 1px solid black;
       margin-bottom: 20px; }
+      #box #comments .comment img {
+        width: 20px;
+        float: right;
+        margin-bottom: 5px;
+        cursor: pointer; }
       #box #comments .comment .user {
         display: flex;
         flex-direction: row;

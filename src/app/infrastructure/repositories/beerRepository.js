@@ -319,7 +319,8 @@ const insertCommentBeer = async (commentReq) => {
     connection.end();
 
     if (rows.affectedRows == 1) {
-        return true;
+        console.log(rows.insertId);
+        return rows.insertId
     }
 }
 
@@ -409,6 +410,23 @@ const getMyVotedBeers = async (page, idUser) => {
     }
 }
 
+const removeComment = async (idComment) => {
+
+    let params = [idComment];
+
+    let query = 'DELETE FROM `comments` WHERE `id`=?';
+
+    let connection = await connections.connectDB();
+    let [rows] = await connection.query(query, params);
+    connection.end();
+
+    if (rows.length != 0) {
+        console.log('si');
+    } else {
+        console.log('no');
+    }
+}
+
 module.exports = {
     getBeersByParams,
     getPunctuationOfThisBeer,
@@ -427,5 +445,6 @@ module.exports = {
     getCommentsOfThisBeer,
     insertCommentBeer,
     getMyLikedBeers,
-    getMyVotedBeers
+    getMyVotedBeers,
+    removeComment
 }
