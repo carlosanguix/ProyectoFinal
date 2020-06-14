@@ -2,6 +2,38 @@
     display: flex;
     flex-direction: column;
 
+    #filterInfo {
+        width: 35px;
+        position: relative;
+        right: -88%;
+        top: 100px;
+    }
+
+    #infoFilter {
+        width: 300px;
+        background-color: rgb(214, 214, 214);
+        position: absolute;
+        right: 10%;
+        top: 260px;
+        border-radius: 10px 10px 10px 10px;
+        box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+        padding: 0 20px 0 20px;
+        p {
+            font-size: 18px;
+            margin: 20px 0 20px 0;
+        }
+    }
+
+    .notVisible {
+        opacity: 0;
+        transition: opacity 0.2s;
+        z-index: -1;
+    }
+    .visible {
+        opacity: 1;
+        z-index: 9;
+    }
+
     #refs {
         margin-left: 22px;
         font-size: 20px;
@@ -44,7 +76,6 @@
             max-width: 300px;
             min-height: 400px;
             max-height: 430px;
-
         }
         #info {
             width: 70%;
@@ -109,6 +140,7 @@
         textarea {
             width: 100%;
             min-height: 80px;
+            font-size: x-large;
             height: auto;
             resize: none;
             outline: none;
@@ -143,11 +175,15 @@
                     width: 40px;
                     margin-right: 10px;
                 }
-                
+
                 span {
-                    font-size: 25px;
+                    font-size: 35px;
                     border-bottom: 1px solid black;
                 }
+            }
+
+            p {
+                font-size: x-large;
             }
         }
     }

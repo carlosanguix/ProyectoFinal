@@ -6,11 +6,20 @@ function initializeVariables() {
     commentBox = document.querySelector('#comments');
     comment = document.querySelector('#commentary');
     sendButton = document.querySelector('#send');
+    infoButton = document.querySelector('#filterInfo');
 }
 
 function giveEvents() {
 
     sendButton.onclick = () => { sendCommentary() };
+
+    infoButton.onmouseover = () => {
+        document.querySelector('#infoFilter').classList.add('visible');
+    }
+
+    infoButton.onmouseout = () => {
+        document.querySelector('#infoFilter').classList.remove('visible');
+    }
 }
 
 function buildTrashButton() {
@@ -67,11 +76,11 @@ async function sendCommentary() {
 
     if (comment.value != "") {
         console.log(comment.value);
-        console.log(document.querySelector('#box').children[1].getAttribute('idbeer'));
+        console.log(document.querySelector('#box').children[3].getAttribute('idbeer'));
 
         let body = {
             idUser: JSON.parse(localStorage.getItem('baron')),
-            idBeer: document.querySelector('#box').children[1].getAttribute('idbeer'),
+            idBeer: document.querySelector('#box').children[3].getAttribute('idbeer'),
             comment: comment.value
         }
 
@@ -125,6 +134,7 @@ function showComment(beerCommented) {
 let commentBox;
 let comment;
 let sendButton;
+let infoButton;
 
 initializeVariables();
 buildTrashButton();

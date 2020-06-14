@@ -59,6 +59,8 @@
   width: 100%;
   border-radius: 3px 3px 3px 3px;
   padding-bottom: 70px; }
+  .tabcontent p {
+    margin-top: 20px; }
   .tabcontent .cardBeer {
     display: flex;
     flex-direction: column;

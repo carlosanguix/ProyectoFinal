@@ -7,6 +7,7 @@ function initializeVariables() {
 function giveEvents() {
 
     liked.onclick = openPage;
+    liked.click();
     voted.onclick = openPage;
 }
 
@@ -174,6 +175,17 @@ function giveBeerEvents(beer, cardBeer) {
     }
 
     cardBeer.children[0].children[0].children[0].onclick = (ev) => { openBeerInNewWindow(beer, cardBeer) };
+}
+
+async function openBeerInNewWindow(beer, cardBeer) {
+    console.log(beer);
+    console.log(cardBeer);
+    
+    let hostLocation = window.location.hostname;
+    let portNumber = window.location.port;
+    let url = "http://" + hostLocation + ":" + portNumber + "/beers/" + beer.id;
+
+    window.location.href = url
 }
 
 async function sendScore(idBeer, score) {

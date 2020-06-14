@@ -8,6 +8,7 @@
     <title>Index - Beer Baron</title>
     <link rel="stylesheet" type="text/css" href="../styles/body.css">
     <link rel="stylesheet" type="text/css" href="../styles/oneBeer.css">
+    <script src="../scripts/logout.js" defer></script>
     <script src="../scripts/oneBeer.js" defer></script>
     <link href="//s.w.org/wp-includes/css/dashicons.css?20150710" rel="stylesheet" type="text/css">
     <link rel="icon" href="../img/logo.png" sizes="196x196">
@@ -22,6 +23,12 @@
 
     <div id="container">
         <div id="box">
+            <img id="filterInfo" src="../img/info.png">
+            <div id="infoFilter" class="notVisible">
+                <p>ABV (Alcohol By Volume): Alcohol percentage</p>
+                <p>IBU (International Bittering Unit): Specify the bitterness of the beer</p>
+                <p>SRM (Standard Reference Method): Specify the beer color</p>
+            </div>
 
             <div id="name"><span><%= beer.name %></span></div>
             <div idBeer="<%= beer.id %>" class="beer">

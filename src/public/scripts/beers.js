@@ -270,9 +270,9 @@ function createPagination(beers, beerParams) {
     let paging = document.createElement('div');
     paging.id = 'paging';
     paging.innerHTML += `
-        <div id="prevPage" class="pag">&laquo;</div>
+        <div id="prevPage" href="#filter" class="pag">&laquo;</div>
         <div id="pagingNumber" value=0 class="pag">1</div>
-        <div id="nextPage" class="pag">&raquo;</div>`;
+        <div id="nextPage" href="#filter" class="pag">&raquo;</div>`;
 
     container.appendChild(paging);
 
@@ -291,6 +291,8 @@ function createPaginationEvents(beers, beerParams) {
 // Function for the button "next" of pagination
 async function chargeNextPagingBeers(beers, beerParams) {
 
+    window.scrollTo(0, 0);
+
     let numPage = parseInt(document.querySelector('#pagingNumber').getAttribute('value'));
 
     if (numPage + 1 < beers.totalNumberOfBeers / 20) {
@@ -308,6 +310,8 @@ async function chargeNextPagingBeers(beers, beerParams) {
 
 // Function for the button "previous" of pagination
 async function chargePreviousPagingBeers(beers, beerParams) {
+
+    window.scrollTo(0, 0);
 
     let numPage = parseInt(document.querySelector('#pagingNumber').getAttribute('value'));
 

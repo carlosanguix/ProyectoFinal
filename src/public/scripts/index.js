@@ -228,22 +228,11 @@ async function createUser(userData) {
 
 function windowPopupMessage() {
 
-    let divMessage = document.createElement('div');
-    let divContainer = document.createElement('div');
-
-    divContainer.classList = 'divContainer';
-    document.querySelector('body').appendChild(divContainer);
-
-    divMessage.classList = 'divMessage';
-    divMessage.id = 'divMessage';
-    divMessage.innerHTML = `<p>Thank you for registering on our website, we are redirecting you to the main page.</p>`;
-    divContainer.appendChild(divMessage);
-
     setTimeout(async () => {
         let hostLocation = window.location.hostname;
         let portNumber = window.location.port;
         window.location.href = "http://" + hostLocation + ":" + portNumber + "/home";
-    }, 3000);
+    }, 500);
 
 }
 
